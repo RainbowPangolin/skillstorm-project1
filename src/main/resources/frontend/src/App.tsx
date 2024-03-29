@@ -1,26 +1,34 @@
 import React from 'react';
-import DataComponent from './components/DataComponent';
-import logo from './logo.svg';
 import './App.css';
+import WarehouseManagement from './components/WarehouseManagement';
+
+
+
+const warehouses = [
+  {
+    id: 1,
+    title: "Warehouse 1",
+    description: "Description of Warehouse 1"
+  },
+  {
+    id: 2,
+    title: "Warehouse 2",
+    description: "Description of Warehouse 2"
+  },
+  {
+    id: 3,
+    title: "Warehouse 3",
+    description: "Description of Warehouse 3"
+  }
+];
+
 
 function App() {
   return (
     <div className="App">
       <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload!
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React --- 
-        </a>
-
-        <DataComponent />
+      {/* <ItemEntry item={item} onEdit={() => {}} onRemove={() => {}} /> */}
+      <WarehouseManagement title={'asdf'} warehouses={warehouses}/>
       </header>
     </div>
   );
