@@ -1,0 +1,2 @@
+add devtools
+set up postgresql

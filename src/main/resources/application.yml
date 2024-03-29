@@ -1,0 +1,11 @@
+spring:
+  application:
+    name: project1
+  web:
+    resources:
+        static-locations: 
+          - classpath:/frontend/build
+server:
+  port: 8080
+
+        
