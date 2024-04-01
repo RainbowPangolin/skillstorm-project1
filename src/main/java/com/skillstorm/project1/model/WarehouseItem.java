@@ -2,6 +2,9 @@ package com.skillstorm.project1.model;
 
 import jakarta.persistence.EmbeddedId;
 import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToMany;
 import jakarta.persistence.ManyToOne;
@@ -12,21 +15,56 @@ import jakarta.persistence.Table;
 @Table(name = "warehouses_items")
 
 public class WarehouseItem {
-
-    @EmbeddedId
-    WarehouseItemKey id;
     
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
+
     @ManyToOne
-    @MapsId("warehouseid")
     @JoinColumn(name="warehouseid")
     Warehouse warehouse;
 
     @ManyToOne
-    @MapsId("itemid")
     @JoinColumn(name="itemid")
     Item item;
 
-    int quantity;
+    Integer quantity;
+
+
+    public Warehouse getWarehouse() {
+        return warehouse;
+    }
+
+    public void setWarehouse(Warehouse warehouse) {
+        this.warehouse = warehouse;
+    }
+
+    public Item getItem() {
+        return item;
+    }
+
+    public void setItem(Item item) {
+        this.item = item;
+    }
+
+
+    public Integer  getQuantity() {
+        return quantity;
+    }
+
+    public void setQuantity(int quantity) {
+        this.quantity = quantity;
+    }
+
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
+    }
+
+    
 
     
 }

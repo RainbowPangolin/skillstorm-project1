@@ -13,4 +13,20 @@ public class WarehouseItemKey implements Serializable {
     @Column(name = "itemid")
     Long itemid;
 
+    public Long getWarehouseid() {
+        return warehouseid;
+    }
+
+    public void setWarehouseid(Long warehouseid) {
+        this.warehouseid = warehouseid;
+    }
+
+    public Long getItemid() {
+        return itemid;
+    }
+
+    public void setItemid(Long itemid) {
+        this.itemid = itemid;
+    }
+
 }

@@ -2,34 +2,22 @@ package com.skillstorm.project1.model;
 
 import java.util.Set;
 
-import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
-import jakarta.persistence.JoinColumn;
-import jakarta.persistence.ManyToOne;
 import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
-import jakarta.validation.constraints.Max;
-import jakarta.validation.constraints.Min;
+
 
 @Entity
 @Table(name = "items")
 public class Item {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long itemid;
 
     private String name;
     private String description;
-    private String quantity;
-
-    
-    @OneToMany(mappedBy = "item")
-    private Set<WarehouseItem> warehouseItem;
-
+    private Integer quantity;
 
     private Item() {}
 
@@ -52,20 +40,14 @@ public class Item {
         this.description = description;
     }
 
-    public String getQuantity() {
+    //TODO: Migrate to DTO that doesn't contain quantity. The Items table should not contain quantity, only the junction table.
+
+    public Integer getQuantity() {
         return quantity;
     }
 
-    public void setQuantity(String quantity) {
+    public void setQuantity(Integer quantity) {
         this.quantity = quantity;
-    }
-
-    public Set<WarehouseItem> getWarehouseItem() {
-        return warehouseItem;
-    }
-
-    public void setWarehouseItem(Set<WarehouseItem> warehouseItem) {
-        this.warehouseItem = warehouseItem;
     }
 
     

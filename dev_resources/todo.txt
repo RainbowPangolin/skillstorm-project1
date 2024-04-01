@@ -1,5 +1,24 @@
-set up postgresql/jpa- see lecture examples
+- Sanity testable/integrated
+    - Get single item from database
+        - Should go -> click warehouse, query for all items in warehouse, returns list, render list
 
+CRUD API:
+    - create
+        add new item (and associate with warehouse)
+        add new warehouse
+    - read
+        get items from warehouse
+        get warehosuses from item
+        get all warehouses
+        get warehouse by id
+        get item by id    
+
+    - update
+        update item quantity or description
+        update warehouse description
+    - delete
+        delete item from warehouse
+        delete warehouse and associated items
 
 - create front end
     - on load, get all warehouses. display each warehosue as a card

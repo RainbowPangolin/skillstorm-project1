@@ -3,11 +3,8 @@ package com.skillstorm.project1.model;
 import java.util.Set;
 
 import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.Id;
-import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
-import jakarta.persistence.GenerationType;
 
 
 @Entity
@@ -15,16 +12,10 @@ import jakarta.persistence.GenerationType;
 public class Warehouse {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long warehouseid;
     private String name;
     private String location;
     private String description;
-
-    @OneToMany(mappedBy = "warehouse")
-    private Set<WarehouseItem> warehouseItem;
-
-
 
     private Warehouse() {}
 
@@ -52,15 +43,6 @@ public class Warehouse {
     public void setDescription(String description) {
         this.description = description;
     }
-
-    public Set<WarehouseItem> getWarehouseItem() {
-        return warehouseItem;
-    }
-
-    public void setWarehouseItem(Set<WarehouseItem> warehouseItem) {
-        this.warehouseItem = warehouseItem;
-    }
-
 
     
 }
