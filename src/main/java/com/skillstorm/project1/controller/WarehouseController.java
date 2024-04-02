@@ -4,6 +4,7 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -18,6 +19,7 @@ import com.skillstorm.project1.model.Warehouse;
 import com.skillstorm.project1.service.WarehouseService;
 
 @RestController
+// @CrossOrigin(origins = "http://localhost:3000")
 public class WarehouseController {
 
     @Autowired
@@ -28,39 +30,39 @@ public class WarehouseController {
     //     return warehouseService.getWarehouseById(id);
     // }
 
-    @GetMapping("/warehouse/{name}")
+    @GetMapping("/api/warehouse/{name}")
     public Warehouse getWarehouse(@PathVariable String name) {
         return warehouseService.getWarehouseByName(name);
     }
 
-    @GetMapping("/warehouses")
+    @GetMapping("/api/warehouses")
     public List<Warehouse> getAllWarehouses() {
         return warehouseService.getAllWarehouses();
     }
 
-    @GetMapping("/item/{id}")
+    @GetMapping("/api/item/{id}")
     public Item getItem(@PathVariable Long id) {
         return warehouseService.getItemById(id);
     }
 
-    @GetMapping("/items")
+    @GetMapping("/api/items")
     public List<Item> getAllItems() {
         return warehouseService.getAllItems();
     }
 
-    @PostMapping("/warehouse")
+    @PostMapping("/api/warehouse")
     public ResponseEntity<Warehouse> createWarehouse(@RequestBody Warehouse warehouse) {
         Warehouse newWarehouse = warehouseService.saveWarehouse(warehouse);
         return new ResponseEntity<Warehouse>(newWarehouse, HttpStatus.OK);        
     }
 
-    @PostMapping("/addItem")
+    @PostMapping("/api/addItem")
     public ResponseEntity<Item> addItem(@RequestBody Item item) {
         Item newItem = warehouseService.saveItem(item);
         return new ResponseEntity<Item>(newItem, HttpStatus.OK);        
     }
 
-    @PostMapping("/{warehouseName}/item")
+    @PostMapping("/api/{warehouseName}/item")
     public ResponseEntity<String> addItemToWarehouse(@RequestBody Item item, @PathVariable String warehouseName) {
         try {
             // Retrieve the warehouse
@@ -77,7 +79,7 @@ public class WarehouseController {
         }
     }
 
-    @DeleteMapping("/{warehouseName}/{itemName}")
+    @DeleteMapping("/api/{warehouseName}/{itemName}")
     public ResponseEntity<String> deleteItemFromWarehouse(@PathVariable String itemName, @PathVariable String warehouseName) {
         try {
             // Retrieve the warehouse
@@ -94,7 +96,7 @@ public class WarehouseController {
         }
     }
 
-    @DeleteMapping("/{warehouseName}")
+    @DeleteMapping("/api/{warehouseName}")
     public ResponseEntity<String> deleteWarehouse (@PathVariable String warehouseName) {
         try {
             Warehouse warehouse = warehouseService.getWarehouseByName(warehouseName);
@@ -110,7 +112,7 @@ public class WarehouseController {
         }
     }
 
-    @PutMapping("/{warehouseName}")
+    @PutMapping("/api/{warehouseName}")
     public ResponseEntity<String> updateWarehouse(@PathVariable String warehouseName, @RequestBody Warehouse warehouse) {
         try {
             // Retrieve the warehouse
