@@ -1,95 +1,67 @@
-/*
-
-Title (WarehouseManagement)
-
-Managing buttons* :
-Add warehouse | Edit warehouse | Delete warehouse
-
-*"Manage" button to pop up those options
-
-List of WarehouseCard items
-    
-*/
-import React from 'react';
-import WarehouseCard from './WarehouseCard'; // Assuming the file path of your WarehouseCard component
-import { useEffect } from 'react';
-
-interface WarehouseManagementProps {
-  title: string;
-  // warehouses: {
-  //   id: number;
-  //   title: string;
-  //   description: string; 
-  // }[]; fds 
-}
+import React, { useEffect, useState } from 'react';
+import WarehouseCard from './WarehouseCard';
+import { Warehouse } from '../interfaces/Warehouse'; // Import Warehouse interface
 
 
+interface WarehouseManagementProps {}
 
-const WarehouseManagement: React.FC<WarehouseManagementProps> = ({ title }) => {
+const WarehouseManagement: React.FC<WarehouseManagementProps> = () => {
+  const [data, setData] = useState<Warehouse[] | null>(null); // Specify the type here
 
   useEffect(() => {
-    // Function to fetch data
     const fetchData = async () => {
       try {
-        console.log("Asdf")
-        // Fetch data from the API
         const response = await fetch('http://localhost:8080/api/warehouses');
         if (!response.ok) {
           throw new Error('Failed to fetch data');
         }
-        // Parse the JSON response
-        const jsonData = await response.json();
-        // Update the state with the fetched dataasds
-        console.log(jsonData);
+        const warehouses: Warehouse[] = await response.json(); // Specify the type here
+        setData(warehouses);
       } catch (error) {
         console.error('Error fetching data:', error);
       }
     };
 
-    // Call the fetchData function when the component mounts
     fetchData();
 
-    // Cleanup function
     return () => {
-      // Perform cleanup if needed (e.g., abort fetch)
+      // Cleanup function if needed
     };
-  }, []); // Empty dependency array to run effect only once
-
+  }, []);
 
   const handleAddWarehouse = () => {
-    // Logic to handle adding a new warehouse
     console.log('Adding a new warehouse');
   };
 
   const handleEditWarehouse = (id: number) => {
-    // Logic to handle editing a warehouse
     console.log(`Editing warehouse with ID ${id}`);
   };
 
   const handleDeleteWarehouse = (id: number) => {
-    // Logic to handle deleting a warehouse
     console.log(`Deleting warehouse with ID ${id}`);
   };
 
   return (
     <div>
-      <h1>{title}</h1>
+      <h1>{}</h1>
       <div>
         <button onClick={handleAddWarehouse}>Add warehouse</button>
         <button onClick={() => console.log('Editing warehouse')}>Edit warehouse</button>
         <button onClick={() => console.log('Deleting warehouse')}>Delete warehouse</button>
       </div>
-      <div>
-        {/* {warehouses.map((warehouse) => (
-          <WarehouseCard
-            id={warehouse.id}
-            title={warehouse.title}
-            description={warehouse.description}
-            onEdit={() => handleEditWarehouse(warehouse.id)}
-            onRemove={() => handleDeleteWarehouse(warehouse.id)}
-          />
-        ))} */}
-      </div>
+  
+      <h1>My Component</h1>
+      {data ? (
+        <ul>
+          {data.map(item => (
+            <li key={item.name}>
+              <WarehouseCard warehouse={item} />
+            </li>
+          ))}
+        </ul>
+      ) : (
+        <p>Loading...</p>
+      )}
     </div>
   );
 };

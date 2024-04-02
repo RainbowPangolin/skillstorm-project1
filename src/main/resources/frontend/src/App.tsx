@@ -28,7 +28,7 @@ function App() {
     <div className="App">
       <header className="App-header">
       {/* <ItemEntry item={item} onEdit={() => {}} onRemove={() => {}} /> */}
-      <WarehouseManagement title={'asdf'}/>
+      <WarehouseManagement/>
       </header>
     </div>
   );

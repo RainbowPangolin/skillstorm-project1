@@ -1,4 +1,5 @@
 package com.skillstorm.project1.service;
+import java.util.ArrayList;
 import java.util.List;
 
 import static com.skillstorm.project1.service.UniqueHash.*;
@@ -72,6 +73,26 @@ public class WarehouseService {
 
     public List<Item> getAllItems() {
         return itemRepository.findAll();
+    }
+
+    public List<Item> getAllItemsFromWarehouse(Warehouse warehouse) {
+        List<Object[]> results = warehouseItemRepository.findItemsWithStoredQuantityByWarehouse(warehouse);
+        List<Item> items = new ArrayList<>();
+
+        for (Object[] result : results) {
+            Item item = (Item) result[0];
+            int storedQuantity = (int) result[1];
+            item.setQuantity(storedQuantity); // Replace the item's quantity with the stored quantity
+            items.add(item);
+        }
+
+
+        return items;
+    }
+
+    public List<Item> getAllItemsFromWarehouseName(String warehouseName) {
+        Warehouse warehouse = this.getWarehouseByName(warehouseName);
+        return this.getAllItemsFromWarehouse(warehouse);
     }
 
     @Transactional

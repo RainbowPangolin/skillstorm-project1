@@ -16,6 +16,10 @@ public interface WarehouseItemRepository extends JpaRepository<WarehouseItem, Lo
     @Query("SELECT wi.item FROM WarehouseItem wi WHERE wi.warehouse = :warehouse")
     List<Item> findItemsByWarehouse(@Param("warehouse") Warehouse warehouse);
 
+    @Query("SELECT wi.item, wi.quantity FROM WarehouseItem wi WHERE wi.warehouse = :warehouse")
+    List<Object[]> findItemsWithStoredQuantityByWarehouse(@Param("warehouse") Warehouse warehouse);
+
+
     @Query("SELECT wi.id FROM WarehouseItem wi WHERE wi.warehouse = :warehouse")
     List<Long> findAllIdsByWarehouse(@Param("warehouse") Warehouse warehouse);
 

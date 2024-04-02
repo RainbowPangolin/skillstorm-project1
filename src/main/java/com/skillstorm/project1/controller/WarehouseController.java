@@ -50,6 +50,11 @@ public class WarehouseController {
         return warehouseService.getAllItems();
     }
 
+    @GetMapping("/api/items/{warehouseName}")
+    public List<Item> getAllItemsFromWarehouse(@PathVariable String warehouseName) {
+        return warehouseService.getAllItemsFromWarehouseName(warehouseName);
+    }
+
     @PostMapping("/api/warehouse")
     public ResponseEntity<Warehouse> createWarehouse(@RequestBody Warehouse warehouse) {
         Warehouse newWarehouse = warehouseService.saveWarehouse(warehouse);
@@ -62,7 +67,7 @@ public class WarehouseController {
         return new ResponseEntity<Item>(newItem, HttpStatus.OK);        
     }
 
-    @PostMapping("/api/{warehouseName}/item")
+    @PostMapping("/api/items/{warehouseName}")
     public ResponseEntity<String> addItemToWarehouse(@RequestBody Item item, @PathVariable String warehouseName) {
         try {
             // Retrieve the warehouse
