@@ -1,39 +1,5 @@
-- Sanity testable/integrated
-    - Get single item from database
-        - Should go -> click warehouse, query for all items in warehouse, returns list, render list
-
-CRUD API:
-    - create
-        add new item (and associate with warehouse)
-        add new warehouse
-    - read
-        get items from warehouse
-        get warehosuses from item
-        get all warehouses
-        get warehouse by id
-        get item by id    
-
-    - update
-        update item quantity or description
-        update warehouse description
-    - delete
-        delete item from warehouse
-        delete warehouse and associated items
-
-- create front end
-    - on load, get all warehouses. display each warehosue as a card
-        - when clicking card, show all items in warehouses
-    - ui to add new warehouses
-    - add new item
-    - update item quantity (increment, decrement, custom amount)
-    - update item name and details
-    - delete item
-    - move item to different warehouse (delete from here and insert in another)
-
-- create logging system 
-    - action done by
-    -time stamp
-    - what the action is
-    - Apply a logging aspect to the service for each CRUD method
-
+- Quick refactor (remove garbage comments and unused code)
+- Conitnue to improve ui
+    - Turn lists into tables?
+    - Give Top buttons (warehousemanager | itemmanager) a background
 
