@@ -14,18 +14,7 @@ interface ItemListProps {
 const ItemList: React.FC<ItemListProps> = ({ items, warehouse, refreshMethod }) => {
   const [isAdding, setIsAdding] = useState(false);
 
-  const handleEdit = (id: number, newQuantity: number) => {
-    // Logic to handle editing an item
-    console.log(`Editing item with ID ${id}. New quantity: ${newQuantity}`);
-  };
-
-  const handleRemove = (id: number, reason: string) => {
-    // Logic to handle removing an item
-    console.log(`Removing item with ID ${id}. Reason: ${reason}`);
-  };
-
   const handleAdd = () => {
-    // Logic to handle removing an item
     setIsAdding(true);
   };
 
@@ -43,8 +32,9 @@ const ItemList: React.FC<ItemListProps> = ({ items, warehouse, refreshMethod }) 
       <Table striped bordered>
         <thead>
           <tr>
-            <th>ID</th>
-            <th>Name</th>
+            {/* <th>ID</th> */}
+            <th>Item Name</th>
+            <th>Description</th>
             <th>Quantity</th>
             <th>Action</th>
           </tr>

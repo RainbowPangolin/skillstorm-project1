@@ -1,25 +1,18 @@
 import React, { useEffect, useState } from 'react';
 import ItemList from './WarehouseItemList'; 
-import { Warehouse } from '../../interfaces/Warehouse'; // Import Warehouse interface
-import { Item } from '../../interfaces/Item'; // Import Warehouse interface
+import { Warehouse } from '../../interfaces/Warehouse'; 
+import { Item } from '../../interfaces/Item'; 
 import * as dc from '../DialogComponents';
 
 import { Button, Collapse, Card, CardBody, CardTitle } from 'reactstrap';
-
-//TODO Fill in with database items
-const items = [
-    { id: 1, name: 'Item 1', quantity: 3 },
-    { id: 2, name: 'Item 2', quantity: 5 },
-    { id: 3, name: 'Item 3', quantity: 2 },
-  ];
 
 interface WarehouseProps {
   warehouse: Warehouse
   refreshMethod: () => void; 
 }
 
-const WarehouseCard: React.FC<WarehouseProps> = ({warehouse, refreshMethod}) => { //{ title, description, onEdit, onRemove }
-  const [itemList, setItemList] = useState<Item[] | null>(null); // Specify the type here
+const WarehouseCard: React.FC<WarehouseProps> = ({warehouse, refreshMethod}) => {
+  const [itemList, setItemList] = useState<Item[] | null>(null); 
   const [isEditing, setIsEditing] = useState(false);
   const [isRemoving, setIsRemoving] = useState(false);
  
@@ -29,7 +22,7 @@ const WarehouseCard: React.FC<WarehouseProps> = ({warehouse, refreshMethod}) => 
       if (!response.ok) {
         throw new Error('Failed to fetch data');
       }
-      const items: Item[] = await response.json(); // Specify the type here
+      const items: Item[] = await response.json(); 
       setItemList(items);
     } catch (error) {
       console.error('Error fetching data:', error);
@@ -40,7 +33,6 @@ const WarehouseCard: React.FC<WarehouseProps> = ({warehouse, refreshMethod}) => 
     fetchData();
   
     return () => {
-      // Cleanup function if needed
     };
   }, []);
 

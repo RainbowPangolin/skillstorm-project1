@@ -7,10 +7,10 @@ import { Container, Row, Col } from 'reactstrap';
 interface ItemManagementProps {}
 
 const ItemManagement: React.FC<ItemManagementProps> = () => {
-  const [data, setData] = useState<Item[] | null>(null); // Specify the type here
+  const [data, setData] = useState<Item[] | null>(null); 
 
   const refreshItems = () => {
-    fetchData(); // Redo fetch
+    fetchData(); 
   };
 
 
@@ -20,7 +20,7 @@ const ItemManagement: React.FC<ItemManagementProps> = () => {
       if (!response.ok) {
         throw new Error('Failed to fetch data');
       }
-      const items: Item[] = await response.json(); // Specify the type here
+      const items: Item[] = await response.json();
       setData(items);
     } catch (error) {
       console.error('Error fetching data:', error);
@@ -32,7 +32,6 @@ const ItemManagement: React.FC<ItemManagementProps> = () => {
     fetchData();
 
     return () => {
-      // Cleanup function if needed
     };
   }, []);
 

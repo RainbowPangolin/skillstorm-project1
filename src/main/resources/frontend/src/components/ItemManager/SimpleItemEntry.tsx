@@ -11,8 +11,6 @@ interface ItemComponentProps {
 const SimpleItemEntry: React.FC<ItemComponentProps> = ({ item, refreshMethod }) => {
   const [isEditing, setIsEditing] = useState(false);
   const [isRemoving, setIsRemoving] = useState(false);
-  const [deleteReason, setDeleteReason] = useState<string>('');
-  const [showConfirmation, setShowConfirmation] = useState<boolean>(false);
 
   const handleCloseDialog = () => {
     refreshMethod();

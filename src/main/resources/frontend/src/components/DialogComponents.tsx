@@ -137,9 +137,28 @@ export const AddItemDialog: React.FC<ItemDialogProps> = ({ onClose, warehouse })
     setFormData({ ...formData, [e.target.name]: e.target.value });
   };
 
+  //Customized handleSubmit to return a response. I should have designed this system better. 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    await submitForm(`${API_BASE_URL}/items/${warehouse?.name}`, 'POST', formData, onClose);
+    try {
+      const response = await fetch(`http://localhost:8080/api/items/${warehouse?.name}`, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(formData),
+      });
+
+      setResponse(response);
+
+      if (!response.ok) {
+        throw new Error(`Failed to add item to warehouse ${warehouse?.name}`);
+      }
+
+      onClose();
+    } catch (error) {
+      console.error('Error adding warehouse:', error);
+    }
   };
 
   return (

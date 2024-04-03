@@ -2,7 +2,7 @@ import * as dc from '../DialogComponents';
 import React, { useState } from 'react';
 import { Item } from '../../interfaces/Item';
 import { Warehouse } from '../../interfaces/Warehouse';
-import { Button, Table } from 'reactstrap';
+import { Button } from 'reactstrap';
 
 interface ItemComponentProps {
   item: Item;
@@ -13,8 +13,6 @@ interface ItemComponentProps {
 const ItemEntry: React.FC<ItemComponentProps> = ({ item, warehouse, refreshMethod }) => {
   const [isEditing, setIsEditing] = useState(false);
   const [isRemoving, setIsRemoving] = useState(false);
-  const [deleteReason, setDeleteReason] = useState<string>('');
-  const [showConfirmation, setShowConfirmation] = useState<boolean>(false);
 
   const handleCloseDialog = () => {
     refreshMethod();
@@ -32,8 +30,9 @@ const ItemEntry: React.FC<ItemComponentProps> = ({ item, warehouse, refreshMetho
 
   return (
     <tr>
-      <td>{item.itemid}</td>
+      {/* <td>{item.itemid}</td> */}
       <td>{item.name}</td>
+      <td>{item.description}</td>
       <td>{item.quantity}</td>
       <td>
         <Button color="primary" className="inner-button" onClick={handleEdit}>Edit</Button>

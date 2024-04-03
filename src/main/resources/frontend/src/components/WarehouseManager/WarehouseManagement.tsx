@@ -7,7 +7,7 @@ import { Button, Card, CardBody, CardTitle, ListGroup, ListGroupItem } from 'rea
 interface WarehouseManagementProps {}
 
 const WarehouseManagement: React.FC<WarehouseManagementProps> = () => {
-  const [data, setData] = useState<Warehouse[] | null>(null); // Specify the type here
+  const [data, setData] = useState<Warehouse[] | null>(null); 
 
   const [isDialogOpen, setIsDialogOpen] = useState(false);
 
@@ -26,7 +26,7 @@ const WarehouseManagement: React.FC<WarehouseManagementProps> = () => {
       if (!response.ok) {
         throw new Error('Failed to fetch data');
       }
-      const warehouses: Warehouse[] = await response.json(); // Specify the type here
+      const warehouses: Warehouse[] = await response.json(); 
       setData(warehouses);
     } catch (error) {
       console.error('Error fetching data:', error);
@@ -34,7 +34,7 @@ const WarehouseManagement: React.FC<WarehouseManagementProps> = () => {
   };
 
   const refreshWarehouses = () => {
-    fetchData(); // Redo fetch
+    fetchData();
   };
 
   useEffect(() => {
@@ -42,7 +42,6 @@ const WarehouseManagement: React.FC<WarehouseManagementProps> = () => {
     fetchData();
 
     return () => {
-      // Cleanup function if needed
     };
   }, []);
 
