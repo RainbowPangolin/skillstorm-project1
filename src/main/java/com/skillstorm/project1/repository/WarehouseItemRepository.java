@@ -16,6 +16,10 @@ public interface WarehouseItemRepository extends JpaRepository<WarehouseItem, Lo
     @Query("SELECT wi.item FROM WarehouseItem wi WHERE wi.warehouse = :warehouse")
     List<Item> findItemsByWarehouse(@Param("warehouse") Warehouse warehouse);
 
+    @Query("SELECT wi.quantity FROM WarehouseItem wi WHERE wi.warehouse = :warehouse AND wi.item = :item")
+    Integer findItemQuantityInWarehouse(@Param("item") Item item, @Param("warehouse") Warehouse warehouse);
+
+
     @Query("SELECT wi.item, wi.quantity FROM WarehouseItem wi WHERE wi.warehouse = :warehouse")
     List<Object[]> findItemsWithStoredQuantityByWarehouse(@Param("warehouse") Warehouse warehouse);
 
@@ -42,5 +46,8 @@ public interface WarehouseItemRepository extends JpaRepository<WarehouseItem, Lo
     @Modifying
     @Query("DELETE FROM WarehouseItem wi WHERE wi.id = :warehouseItemId")
     void deleteRowById(@Param("warehouseItemId") Long warehouseItemId);
+    
+
+
     
 }

@@ -13,5 +13,8 @@ public interface ItemRepository extends JpaRepository<Item, Long> {
     @Query("UPDATE Item i SET i.quantity = i.quantity + :quantityIncrement WHERE i.itemid = :itemId")
     void incrementQuantity(@Param("itemId") Long itemId, @Param("quantityIncrement") int quantityIncrement);
 
-    
+    @Modifying
+    @Query("UPDATE Item i SET i.quantity = i.quantity - :quantityDecrement WHERE i.itemid = :itemId")
+    void decrementQuantity(@Param("itemId") Long itemId, @Param("quantityDecrement") int quantityDecrement);
+
 }

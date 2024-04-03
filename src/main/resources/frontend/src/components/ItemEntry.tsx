@@ -1,68 +1,47 @@
-/*
-
-item id | item name | quantity | edit button* | remove all ** | information box ***
-
-* allows changing of item quantity 
-** confirmation pop up includes a 'reason for deleting'
-
-*/
+import * as dc from './DialogComponents';
 import React, { useState } from 'react';
-
-interface Item {
-  id: number;
-  name: string;
-  quantity: number;
-}
+import { Item } from '../interfaces/Item';
+import { Warehouse } from '../interfaces/Warehouse';
 
 interface ItemComponentProps {
   item: Item;
-  onEdit: (id: number, newQuantity: number) => void;
-  onRemove: (id: number, reason: string) => void;
+  warehouse: Warehouse;
+  refreshMethod: () => void; 
 }
 
-const ItemEntry: React.FC<ItemComponentProps> = ({ item, onEdit, onRemove }) => {
+const ItemEntry: React.FC<ItemComponentProps> = ({ item, warehouse, refreshMethod }) => {
+  const [isEditing, setIsEditing] = useState(false);
+  const [isRemoving, setIsRemoving] = useState(false);
+ 
+
   const [deleteReason, setDeleteReason] = useState<string>('');
   const [showConfirmation, setShowConfirmation] = useState<boolean>(false);
 
+
+  const handleCloseDialog = () => {
+    refreshMethod();
+    setIsEditing(false);
+    setIsRemoving(false);
+  };
+
   const handleEdit = () => {
-    const newQuantity = prompt(`Enter new quantity for ${item.name}:`, item.quantity.toString());
-    if (newQuantity !== null && !isNaN(parseInt(newQuantity))) {
-      onEdit(item.id, parseInt(newQuantity));
-    }
+    setIsEditing(true);
   };
 
   const handleRemove = () => {
-    setShowConfirmation(true);
+    setIsRemoving(true);
   };
 
-  const confirmRemove = () => {
-    if (deleteReason.trim() !== '') {
-      onRemove(item.id, deleteReason);
-      setDeleteReason('');
-      setShowConfirmation(false);
-    } else {
-      alert('Please provide a reason for deleting.');
-    }
-  };
 
   return (
     <div className="item">
-      <div>ID: {item.id}</div>
+      <div>ID: {item.itemid}</div>
       <div>Name: {item.name}</div>
       <div>Quantity: {item.quantity}</div>
       <button onClick={handleEdit}>Edit</button>
-      <button onClick={handleRemove}>Remove All</button>
-      {showConfirmation && (
-        <div className="confirmation">
-          <p>Please provide a reason for deleting:</p>
-          <input
-            type="text"
-            value={deleteReason}
-            onChange={(e) => setDeleteReason(e.target.value)}
-          />
-          <button onClick={confirmRemove}>Confirm</button>
-        </div>
-      )}
+      {isEditing && <dc.EditItemDialog onClose={handleCloseDialog} item={item} warehouse={warehouse}/>}  
+      <button onClick={handleRemove}>Delete Item</button>
+      {isRemoving && <dc.RemoveItemDialog onClose={handleCloseDialog} item={item} warehouse={warehouse}/>}  
     </div>
   );
 };

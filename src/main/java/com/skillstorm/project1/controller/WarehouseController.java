@@ -133,4 +133,45 @@ public class WarehouseController {
             return new ResponseEntity<>("Failed to update warehouse: " + e.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
+
+    @PutMapping("/api/itemlist/{itemName}")
+    public ResponseEntity<String> updateItem(@PathVariable String itemName, @RequestBody Item item) {
+        try {
+            // Retrieve the warehouse
+            Item existingItem = warehouseService.getItemByName(itemName);
+            if (existingItem == null) {
+                return new ResponseEntity<>("item with name " + itemName + " not found", HttpStatus.NOT_FOUND);
+            }
+
+            warehouseService.updateItem(itemName, item);
+
+            return new ResponseEntity<>("Item updated successfully", HttpStatus.CREATED);
+        } catch (Exception e) {
+            return new ResponseEntity<>("Failed to update warehouse: " + e.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+    }
+
+    
+    @PutMapping("/api/items/{warehouseName}/{itemName}")
+    public ResponseEntity<String> editWarehouseItem(@RequestBody Item newItem, @PathVariable String warehouseName, @PathVariable String itemName) {
+        try {
+            // Retrieve the warehouse
+            Warehouse warehouse = warehouseService.getWarehouseByName(warehouseName);
+            if (warehouse == null) {
+                return new ResponseEntity<>("Warehouse with id " + warehouseName + " not found", HttpStatus.NOT_FOUND);
+            }
+
+            // Retrieve the old item
+            Item oldItem = warehouseService.getItemByName(itemName);
+            if (warehouse == null) {
+                return new ResponseEntity<>("Warehouse with id " + warehouseName + " not found", HttpStatus.NOT_FOUND);
+            }
+
+            warehouseService.updateWarehouseItem(warehouse, oldItem, newItem);
+
+            return new ResponseEntity<>("Item added to warehouse successfully", HttpStatus.CREATED);
+        } catch (Exception e) {
+            return new ResponseEntity<>("Failed to add item to warehouse: " + e.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+    }
 }

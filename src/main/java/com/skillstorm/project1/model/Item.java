@@ -50,5 +50,13 @@ public class Item {
         this.quantity = quantity;
     }
 
+    public Item deepCopy() {
+        Item copy = new Item();
+        copy.setItemid(this.getItemid());
+        copy.setName(this.getName());
+        copy.setDescription(this.getDescription());
+        copy.setQuantity(this.getQuantity());
+        return copy;
+    }
     
 }
