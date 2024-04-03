@@ -15,6 +15,7 @@ const WarehouseCard: React.FC<WarehouseProps> = ({warehouse, refreshMethod}) => 
   const [itemList, setItemList] = useState<Item[] | null>(null); 
   const [isEditing, setIsEditing] = useState(false);
   const [isRemoving, setIsRemoving] = useState(false);
+  const [utilization, setUtilization] = useState(0);
  
   const fetchData = async () => {
     try {
@@ -29,9 +30,22 @@ const WarehouseCard: React.FC<WarehouseProps> = ({warehouse, refreshMethod}) => 
     }
   };
 
+  const fetchUtilization = async () => {
+    try {
+      const response = await fetch(`http://localhost:8080/api/warehouseutilization/${warehouse.name}`);
+      if (!response.ok) {
+        throw new Error('Failed to fetch data');
+      }
+      const utilization: number = await response.json(); 
+      setUtilization(utilization);
+    } catch (error) {
+      console.error('Error fetching data:', error);
+    }
+  };
+
   useEffect(() => {  
     fetchData();
-  
+    fetchUtilization();
     return () => {
     };
   }, []);
@@ -58,20 +72,21 @@ const WarehouseCard: React.FC<WarehouseProps> = ({warehouse, refreshMethod}) => 
 
   const refreshItemList = () => {
     fetchData();
+    fetchUtilization();
   };
 
   return (
     <div>
       <div className="item-list-container">
-        <div className="primary-button flex-grow-item" >
+        <div className="flex-grow-item" >
           <div style={{ cursor: 'pointer' }} onClick={handleSpoilerToggle}>
-            {isSpoilerOpen ? '▼' : '►'} {warehouse.name} | {warehouse.location} | {warehouse.capacity}
+            {isSpoilerOpen ? '▼' : '►'} {warehouse.name} | {warehouse.location} | {utilization} out of {warehouse.capacity}
           </div>
         </div>
 
         <div className="button-container">
-          <Button className="inner-button" onClick={handleEdit}>Edit Warehouse</Button>
-          <Button className="inner-button" onClick={handleRemove}>Delete Warehouse</Button>
+          <Button color="primary" className="inner-button" onClick={handleEdit}>Edit</Button>
+          <Button color="danger" className="inner-button" onClick={handleRemove}>Delete</Button>
         </div>
         
         {isEditing && <dc.EditWarehouseDialog onClose={handleCloseDialog} warehouse={warehouse} />}

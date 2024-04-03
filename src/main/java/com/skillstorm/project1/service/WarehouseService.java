@@ -95,6 +95,17 @@ public class WarehouseService {
     }
 
     @Transactional
+    public Integer getWarehouseUtilization(Warehouse warehouse){
+        return warehouseItemRepository.findUtilizationOfWarehouseCapacity(warehouse);
+    }
+
+    @Transactional
+    public Integer getWarehouseUtilizationByName(String warehouseName){
+        Warehouse warehouse = this.getWarehouseByName(warehouseName);
+        return warehouseItemRepository.findUtilizationOfWarehouseCapacity(warehouse);
+    }
+
+    @Transactional
     public void insertItemIntoWarehouse(Item item, Warehouse warehouse){
         try{
             Integer newQuantity = item.getQuantity();

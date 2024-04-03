@@ -15,6 +15,8 @@ import org.springframework.web.bind.annotation.RestController;
 import com.skillstorm.project1.model.Item;
 import com.skillstorm.project1.model.Warehouse;
 import com.skillstorm.project1.service.WarehouseService;
+import org.springframework.web.bind.annotation.RequestParam;
+
 
 @RestController
 public class WarehouseController {
@@ -47,6 +49,11 @@ public class WarehouseController {
         return warehouseService.getAllItems();
     }
 
+    @GetMapping("/api/warehouseutilization/{warehouseName}")
+    public Integer getUtilization(@PathVariable String warehouseName) {
+        return warehouseService.getWarehouseUtilizationByName(warehouseName);
+    }
+    
 
     @GetMapping("/api/items/{warehouseName}")
     public List<Item> getAllItemsFromWarehouse(@PathVariable String warehouseName) {
