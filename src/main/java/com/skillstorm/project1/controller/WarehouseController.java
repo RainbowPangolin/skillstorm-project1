@@ -85,7 +85,11 @@ public class WarehouseController {
             warehouseService.insertItemIntoWarehouse(item, warehouse);
 
             return new ResponseEntity<>("Item added to warehouse successfully", HttpStatus.CREATED);
-        } catch (Exception e) {
+        } 
+        catch (RuntimeException e) {
+            return new ResponseEntity<>("Adding this item exceeds the capacity of the warehouse.", HttpStatus.UNPROCESSABLE_ENTITY);
+        }
+        catch (Exception e) {
             return new ResponseEntity<>("Failed to add item to warehouse: " + e.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }

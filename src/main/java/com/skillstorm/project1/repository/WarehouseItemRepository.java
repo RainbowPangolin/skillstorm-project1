@@ -49,5 +49,10 @@ public interface WarehouseItemRepository extends JpaRepository<WarehouseItem, Lo
     
 
 
+    @Query("SELECT COALESCE(SUM(wi.quantity), 0) FROM WarehouseItem wi WHERE wi.warehouse = :warehouse")
+    Integer findUtilizationOfWarehouseCapacity(@Param("warehouse") Warehouse warehouse);
+
+    @Query("SELECT COALESCE(SUM(wi.quantity), 0)FROM WarehouseItem wi WHERE wi.item = :item")
+    Integer findQuantityOfItem(@Param("item") Item item);
     
 }

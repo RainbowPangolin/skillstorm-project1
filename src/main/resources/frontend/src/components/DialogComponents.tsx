@@ -1,6 +1,8 @@
 import React, { useState } from 'react';
 import { Warehouse } from '../interfaces/Warehouse';
 import { Item } from '../interfaces/Item';
+import StatusDisplay from './StatusDisplay';
+import { HttpResponse } from '../interfaces/HttpResponse';
 
 interface AddProps {
   onClose: () => void;
@@ -23,7 +25,7 @@ interface SimpleItemListProps {
   item: Item;
 }
 export const AddWarehouseDialog: React.FC<AddProps> = ({ onClose }) => {
-  const [formData, setFormData] = useState({ name: '', location: '' });
+  const [formData, setFormData] = useState({ name: '', location: '', capacity: 1 });
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
@@ -62,6 +64,12 @@ export const AddWarehouseDialog: React.FC<AddProps> = ({ onClose }) => {
             <label htmlFor="location">Location:</label>
             <input type="text" id="location" name="location" value={formData.location} onChange={handleChange} required />
           </div>
+
+          <div>
+            <label htmlFor="capacity">Capacity:</label>
+            <input type="text" id="capacity" name="capacity" value={formData.capacity} onChange={handleChange} required />
+          </div>
+
           <button type="submit">Submit</button>
           <button type="button" onClick={onClose}>Close</button>
         </form>
@@ -159,7 +167,9 @@ export const RemoveWarehouseDialog: React.FC<EditProps> = ({ onClose, warehouse}
 
 export const AddItemDialog: React.FC<EditProps> = ({onClose, warehouse}) => {
   const [formData, setFormData] = useState({ name: '', description: '', quantity: 1 });
+  const [response, setResponse] = useState<HttpResponse | null>(null);
 
+  
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
   };
@@ -174,10 +184,13 @@ export const AddItemDialog: React.FC<EditProps> = ({onClose, warehouse}) => {
         },
         body: JSON.stringify(formData),
       });
+
+      setResponse(response);
+
       if (!response.ok) {
         throw new Error(`Failed to add item to warehouse ${warehouse.name}`);
       }
-      // Assuming success, close the dialog
+
       onClose();
     } catch (error) {
       console.error('Error adding warehouse:', error);
@@ -187,7 +200,10 @@ export const AddItemDialog: React.FC<EditProps> = ({onClose, warehouse}) => {
   return (
     <div className="dialog-overlay">
       <div className="dialog-content">
-        <h2>Add New Item to </h2>
+        <h2>Add New Item to {warehouse.name}</h2>
+
+        <StatusDisplay response={response}/>
+
         <form onSubmit={handleSubmit}>
           <div>
             <label htmlFor="name">Name:</label>

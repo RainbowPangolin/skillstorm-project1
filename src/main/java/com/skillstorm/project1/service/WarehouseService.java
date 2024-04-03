@@ -95,16 +95,19 @@ public class WarehouseService {
         return this.getAllItemsFromWarehouse(warehouse);
     }
 
+    // TODO Improve Hash collision
+
     @Transactional
     public void insertItemIntoWarehouse(Item item, Warehouse warehouse){
         try{
-            //if no warehouse, throw error. HTTP Response should say "no warehouse"
-
-            //attempt inserting item
-
-            // TODO Hash collision
 
             Integer newQuantity = item.getQuantity();
+
+            Integer curUtilization = warehouseItemRepository.findUtilizationOfWarehouseCapacity(warehouse);
+
+            if(curUtilization + newQuantity > warehouse.getCapacity()){
+                throw new RuntimeException("Adding the item would surpass the capacity of the warehouse");
+            }
 
             Item curItem = this.saveItem(item);
 
@@ -127,11 +130,11 @@ public class WarehouseService {
                 warehouseItemRepository.save(newWarehouseItem);
             }
 
-        } catch (NullPointerException e){
+        } 
+        catch (NullPointerException e){
             System.out.println("----- ERROR NPE-------- \n\n\n");
-        } catch (Exception e){
-            System.out.println("----- ERROR F -------- \n\n\n" + e);
-        }
+        } 
+
 
     }
 

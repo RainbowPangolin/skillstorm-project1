@@ -74,7 +74,7 @@ const WarehouseCard: React.FC<WarehouseProps> = ({warehouse, refreshMethod}) => 
       <div className="item-list-container">
         <div className="primary-button flex-grow-item" >
           <div style={{ cursor: 'pointer' }} onClick={handleSpoilerToggle}>
-            {isSpoilerOpen ? '▼' : '►'} {warehouse.name} | {warehouse.location}
+            {isSpoilerOpen ? '▼' : '►'} {warehouse.name} | {warehouse.location} | {warehouse.capacity}
           </div>
           
         </div>

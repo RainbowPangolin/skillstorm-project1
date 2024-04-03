@@ -16,6 +16,7 @@ public class Warehouse {
     private String name;
     private String location;
     private String description;
+    private Integer capacity;
 
     private Warehouse() {}
 
@@ -42,6 +43,14 @@ public class Warehouse {
     }
     public void setDescription(String description) {
         this.description = description;
+    }
+
+    public Integer getCapacity() {
+        return capacity;
+    }
+
+    public void setCapacity(Integer capacity) {
+        this.capacity = capacity;
     }
 
     
