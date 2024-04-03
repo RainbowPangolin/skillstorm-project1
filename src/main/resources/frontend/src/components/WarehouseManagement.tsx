@@ -50,10 +50,9 @@ const WarehouseManagement: React.FC<WarehouseManagementProps> = () => {
     <div>
       <h1>{}</h1>
       <div>
-      <button onClick={handleAddWarehouse}>Add warehouse</button>
+      <button className="button" onClick={handleAddWarehouse}>Add warehouse</button>
       {/* Render the dialog component if isDialogOpen is true */}
       {isDialogOpen && <dc.AddWarehouseDialog onClose={handleCloseDialog} />}        
-
       </div>
   
       <h1>My Component</h1>

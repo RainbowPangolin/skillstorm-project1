@@ -50,6 +50,12 @@ public class WarehouseController {
         return warehouseService.getAllItems();
     }
 
+    @GetMapping("/api/itemlist")
+    public List<Item> getItemList() {
+        return warehouseService.getAllItems();
+    }
+
+
     @GetMapping("/api/items/{warehouseName}")
     public List<Item> getAllItemsFromWarehouse(@PathVariable String warehouseName) {
         return warehouseService.getAllItemsFromWarehouseName(warehouseName);
