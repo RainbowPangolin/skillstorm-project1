@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import WarehouseCard from './WarehouseCard';
 import { Warehouse } from '../../interfaces/Warehouse'; // Import Warehouse interface
 import * as dc from '../DialogComponents';
-
+import { Button, Card, CardBody, CardTitle, ListGroup, ListGroupItem } from 'reactstrap';
 
 interface WarehouseManagementProps {}
 
@@ -47,27 +47,29 @@ const WarehouseManagement: React.FC<WarehouseManagementProps> = () => {
   }, []);
 
   return (
-    <div className="card">
-      <h1>Manage Warehouses</h1>
+    <Card>
+      <CardBody>
+        <CardTitle tag="h5">Manage Warehouses</CardTitle>
 
-      <div>
-        <button className="button" onClick={handleAddWarehouse}>Add warehouse</button>
-        {/* Render the dialog component if isDialogOpen is true */}
-        {isDialogOpen && <dc.AddWarehouseDialog onClose={handleCloseDialog} />}        
-      </div>
+        <div>
+          <Button color="primary" onClick={handleAddWarehouse}>Add warehouse</Button>
+          {/* Render the dialog component if isDialogOpen is true */}
+          {isDialogOpen && <dc.AddWarehouseDialog onClose={handleCloseDialog} />}        
+        </div>
 
-      {data ? (
-        <ul className="list">
-          {data.map(wh => (
-            <li key={wh.name}>
-              <WarehouseCard warehouse={wh} refreshMethod={refreshWarehouses}/>
-            </li>
-          ))}
-        </ul>
-      ) : (
-        <p>Loading...</p>
-      )}
-    </div>
+        {data ? (
+          <ListGroup className="mt-3">
+            {data.map(wh => (
+              <ListGroupItem key={wh.name}>
+                <WarehouseCard warehouse={wh} refreshMethod={refreshWarehouses}/>
+              </ListGroupItem>
+            ))}
+          </ListGroup>
+        ) : (
+          <p>Loading...</p>
+        )}
+      </CardBody>
+    </Card>
   );
 };
 

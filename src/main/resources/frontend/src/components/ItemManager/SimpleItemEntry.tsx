@@ -1,21 +1,18 @@
 import * as dc from '../DialogComponents';
 import React, { useState } from 'react';
 import { Item } from '../../interfaces/Item';
-import { Warehouse } from '../../interfaces/Warehouse';
+import { Button, Table } from 'reactstrap';
 
 interface ItemComponentProps {
   item: Item;
-  refreshMethod: () => void; 
+  refreshMethod: () => void;
 }
 
 const SimpleItemEntry: React.FC<ItemComponentProps> = ({ item, refreshMethod }) => {
   const [isEditing, setIsEditing] = useState(false);
   const [isRemoving, setIsRemoving] = useState(false);
- 
-
   const [deleteReason, setDeleteReason] = useState<string>('');
   const [showConfirmation, setShowConfirmation] = useState<boolean>(false);
-
 
   const handleCloseDialog = () => {
     refreshMethod();
@@ -31,19 +28,18 @@ const SimpleItemEntry: React.FC<ItemComponentProps> = ({ item, refreshMethod }) 
     setIsRemoving(true);
   };
 
-
   return (
-    <div className="item-list-container">
-      <div>ID: {item.itemid}</div>
-      <div>Name: {item.name}</div>
-      <div>Quantity: {item.quantity}</div>
-      <div className="button-container">
-        <button className="inner-button" onClick={handleEdit}>Edit</button>
-        <button className="inner-button" onClick={handleRemove}>Delete</button>
-      </div>
-      {isEditing && <dc.EditItemDialogNoQuantity onClose={handleCloseDialog} item={item}/>}  
-      {isRemoving && <dc.RemoveItemDialogGlobal onClose={handleCloseDialog} item={item}/>}  
-    </div>
+    <tr>
+      <td>{item.itemid}</td>
+      <td>{item.name}</td>
+      <td>{item.quantity}</td>
+      <td>
+        <Button color="primary" className="inner-button" onClick={handleEdit}>Edit</Button>
+        <Button color="danger" className="inner-button" onClick={handleRemove}>Delete</Button>
+      </td>
+      {isEditing && <dc.EditItemDialogNoQuantity onClose={handleCloseDialog} item={item} />}
+      {isRemoving && <dc.RemoveItemDialogGlobal onClose={handleCloseDialog} item={item} />}
+    </tr>
   );
 };
 

@@ -3,6 +3,7 @@ import ItemEntry from './WarehouseItemEntry'; // Assuming the file path of your 
 import { Item } from '../../interfaces/Item';
 import * as dc from '../DialogComponents';
 import { Warehouse } from '../../interfaces/Warehouse';
+import { Button, Table } from 'reactstrap';
 
 interface ItemListProps {
   items: Item[];
@@ -10,9 +11,8 @@ interface ItemListProps {
   refreshMethod: () => void; 
 }
 
-const ItemList: React.FC<ItemListProps> = ({ items, warehouse, refreshMethod}) => {
+const ItemList: React.FC<ItemListProps> = ({ items, warehouse, refreshMethod }) => {
   const [isAdding, setIsAdding] = useState(false);
-
 
   const handleEdit = (id: number, newQuantity: number) => {
     // Logic to handle editing an item
@@ -35,19 +35,26 @@ const ItemList: React.FC<ItemListProps> = ({ items, warehouse, refreshMethod}) =
   };
 
   return (
-    <div className="">
+    <div>
       <h1>Item Entries</h1>
-      <button className="button" onClick={handleAdd}>Add new item to warehouse</button>
-      {isAdding && <dc.AddItemDialog onClose={handleCloseDialog} warehouse={warehouse}/>}        
+      <Button color="primary" onClick={handleAdd}>Add new item to warehouse</Button>
+      {isAdding && <dc.AddItemDialog onClose={handleCloseDialog} warehouse={warehouse} />}        
 
-      <ul className="inner-list">
-        {items.map((item) => (
-          <li key={item.name}>
+      <Table striped bordered>
+        <thead>
+          <tr>
+            <th>ID</th>
+            <th>Name</th>
+            <th>Quantity</th>
+            <th>Action</th>
+          </tr>
+        </thead>
+        <tbody>
+          {items.map((item) => (
             <ItemEntry key={item.itemid} item={item} warehouse={warehouse} refreshMethod={refreshMethod} />
-          </li>
-        ))} 
-      </ul>
-      
+          ))}
+        </tbody>
+      </Table>
     </div>
   );
 };

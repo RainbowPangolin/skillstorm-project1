@@ -4,7 +4,7 @@ import { Warehouse } from '../../interfaces/Warehouse'; // Import Warehouse inte
 import { Item } from '../../interfaces/Item'; // Import Warehouse interface
 import * as dc from '../DialogComponents';
 
-
+import { Button, Collapse, Card, CardBody, CardTitle } from 'reactstrap';
 
 //TODO Fill in with database items
 const items = [
@@ -70,28 +70,32 @@ const WarehouseCard: React.FC<WarehouseProps> = ({warehouse, refreshMethod}) => 
 
   return (
     <div>
-
       <div className="item-list-container">
         <div className="primary-button flex-grow-item" >
           <div style={{ cursor: 'pointer' }} onClick={handleSpoilerToggle}>
             {isSpoilerOpen ? '▼' : '►'} {warehouse.name} | {warehouse.location} | {warehouse.capacity}
           </div>
-          
         </div>
 
         <div className="button-container">
-            <button className="button inner-button" onClick={handleEdit}>Edit Warehouse</button>
-            <button className="button inner-button" onClick={handleRemove}>Delete Warehouse</button>
+          <Button className="inner-button" onClick={handleEdit}>Edit Warehouse</Button>
+          <Button className="inner-button" onClick={handleRemove}>Delete Warehouse</Button>
         </div>
-          {isEditing && <dc.EditWarehouseDialog onClose={handleCloseDialog} warehouse={warehouse}/>}        
-          {isRemoving && <dc.RemoveWarehouseDialog onClose={handleCloseDialog} warehouse={warehouse}/>}        
-      </div>
-      {isSpoilerOpen && itemList && (
-        <div>
-          <ItemList items={itemList} warehouse={warehouse} refreshMethod={refreshItemList} />
-        </div>
-      )}
         
+        {isEditing && <dc.EditWarehouseDialog onClose={handleCloseDialog} warehouse={warehouse} />}
+        {isRemoving && <dc.RemoveWarehouseDialog onClose={handleCloseDialog} warehouse={warehouse} />}
+      </div>
+      
+      <Collapse isOpen={isSpoilerOpen}>
+        {itemList && (
+          <Card>
+            <CardBody>
+              <CardTitle tag="h5">Item List</CardTitle>
+              <ItemList items={itemList} warehouse={warehouse} refreshMethod={refreshItemList} />
+            </CardBody>
+          </Card>
+        )}
+      </Collapse>
     </div>
   );
 };
