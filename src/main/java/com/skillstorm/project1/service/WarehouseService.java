@@ -50,8 +50,6 @@ public class WarehouseService {
         return this.getItemById(itemid);
     }
 
-    //TODO Transactional services
-
     public Warehouse saveWarehouse (Warehouse warehouse){
         String warehouseName = warehouse.getName();
         Long hash = (long) warehouseName.hashCode();
@@ -149,7 +147,6 @@ public class WarehouseService {
         this.saveWarehouse(warehouse);
 
         //Reassign warehouseID's in warehouseItem table
-
         List<Item> listOfItems = warehouseItemRepository.findItemsByWarehouse(oldWarehouse);
         for (Item i : listOfItems){
             this.insertItemIntoWarehouse(i, warehouse);
@@ -167,12 +164,12 @@ public class WarehouseService {
     }
 
     @Transactional
-    public void destroyWarehouseCascade(Warehouse warehouse){
-        Long w_id = warehouse.getWarehouseid();
-        warehouseRepository.deleteById(w_id);
-        List<Long> wi_id_list = warehouseItemRepository.findAllIdsByWarehouse(warehouse);
-        for (Long id : wi_id_list){
-            warehouseItemRepository.deleteRowById(id);
+    public void deleteItemFromAllWarehouses(String itemName){
+        Item searchItem = this.getItemByName(itemName);
+        List<Warehouse> remainingWarehouses = warehouseItemRepository.findWarehousesByItem(searchItem);
+
+        for (Warehouse w : remainingWarehouses){
+            this.deleteItemFromWarehouse(itemName, w.getName());
         }
     }
 
@@ -187,6 +184,28 @@ public class WarehouseService {
 
         //TODO Check if any warehouse still has item. If not, delete from items table. 
 
+        Item searchItem = this.getItemById(itemId);
+
+        List<Warehouse> remainingWarehouses = warehouseItemRepository.findWarehousesByItem(searchItem);
+
+        if(remainingWarehouses.size() <= 0){
+            itemRepository.deleteById(itemId);
+        }
+
+    }
+
+
+    
+    @Transactional
+    public void destroyWarehouseCascade(Warehouse warehouse){
+        List<Item> listOfItems = this.getAllItemsFromWarehouseName(warehouse.getName());
+
+        for (Item i : listOfItems){
+            this.deleteItemFromWarehouse(i.getName(), warehouse.getName());
+        }
+
+        Long w_id = warehouse.getWarehouseid();
+        warehouseRepository.deleteById(w_id);
     }
 
     @Transactional
@@ -215,9 +234,10 @@ public class WarehouseService {
             Integer oldQuantity = warehouseItemRepository.findItemQuantityInWarehouse(oldItem, w);
 
             System.out.println("\n\n" + oldQuantity + "\n\n");
-            Item tempItem = null;
-            tempItem = newItem.deepCopy();
+            Item tempItem = newItem.deepCopy();
             tempItem.setQuantity(oldQuantity);
+
+            System.out.println(tempItem.getName());
 
             // newItems.add(tempItem);
             this.insertItemIntoWarehouse(tempItem, w);

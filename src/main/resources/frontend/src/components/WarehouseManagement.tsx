@@ -47,20 +47,20 @@ const WarehouseManagement: React.FC<WarehouseManagementProps> = () => {
   }, []);
 
   return (
-    <div>
-      <h1>{}</h1>
+    <div className="card">
+      <h1>Manage Warehouses</h1>
+
       <div>
-      <button className="button" onClick={handleAddWarehouse}>Add warehouse</button>
-      {/* Render the dialog component if isDialogOpen is true */}
-      {isDialogOpen && <dc.AddWarehouseDialog onClose={handleCloseDialog} />}        
+        <button className="button" onClick={handleAddWarehouse}>Add warehouse</button>
+        {/* Render the dialog component if isDialogOpen is true */}
+        {isDialogOpen && <dc.AddWarehouseDialog onClose={handleCloseDialog} />}        
       </div>
-  
-      <h1>My Component</h1>
+
       {data ? (
-        <ul>
-          {data.map(item => (
-            <li key={item.name}>
-              <WarehouseCard warehouse={item} refreshMethod={refreshWarehouses}/>
+        <ul className="list">
+          {data.map(wh => (
+            <li key={wh.name}>
+              <WarehouseCard warehouse={wh} refreshMethod={refreshWarehouses}/>
             </li>
           ))}
         </ul>

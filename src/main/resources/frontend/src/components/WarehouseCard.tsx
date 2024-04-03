@@ -70,16 +70,28 @@ const WarehouseCard: React.FC<WarehouseProps> = ({warehouse, refreshMethod}) => 
 
   return (
     <div>
-      <div style={{ cursor: 'pointer' }} onClick={handleSpoilerToggle}>
-        {isSpoilerOpen ? '▼' : '►'} {warehouse.name} | {warehouse.location}
-      </div>
-      {isSpoilerOpen && itemList && <ItemList items={itemList} warehouse={warehouse} refreshMethod={refreshItemList} />}
-      <button onClick={handleEdit}>Edit Warehouse</button>
-      {/* Render the dialog component if isDialogOpen is true */}
-      {isEditing && <dc.EditWarehouseDialog onClose={handleCloseDialog} warehouse={warehouse}/>}        
 
-      <button onClick={handleRemove}>Delete Warehouse</button>
-      {isRemoving && <dc.RemoveWarehouseDialog onClose={handleCloseDialog} warehouse={warehouse}/>}        
+      <div className="item-list-container">
+        <div className="primary-button flex-grow-item" >
+          <div style={{ cursor: 'pointer' }} onClick={handleSpoilerToggle}>
+            {isSpoilerOpen ? '▼' : '►'} {warehouse.name} | {warehouse.location}
+          </div>
+          
+        </div>
+
+        <div className="button-container">
+            <button className="button inner-button" onClick={handleEdit}>Edit Warehouse</button>
+            <button className="button inner-button" onClick={handleRemove}>Delete Warehouse</button>
+        </div>
+          {isEditing && <dc.EditWarehouseDialog onClose={handleCloseDialog} warehouse={warehouse}/>}        
+          {isRemoving && <dc.RemoveWarehouseDialog onClose={handleCloseDialog} warehouse={warehouse}/>}        
+      </div>
+      {isSpoilerOpen && itemList && (
+        <div>
+          <ItemList items={itemList} warehouse={warehouse} refreshMethod={refreshItemList} />
+        </div>
+      )}
+        
     </div>
   );
 };

@@ -33,13 +33,15 @@ const SimpleItemEntry: React.FC<ItemComponentProps> = ({ item, refreshMethod }) 
 
 
   return (
-    <div className="item">
+    <div className="item-list-container">
       <div>ID: {item.itemid}</div>
       <div>Name: {item.name}</div>
       <div>Quantity: {item.quantity}</div>
-      <button onClick={handleEdit}>Edit</button>
+      <div className="button-container">
+        <button className="inner-button" onClick={handleEdit}>Edit</button>
+        <button className="inner-button" onClick={handleRemove}>Delete</button>
+      </div>
       {isEditing && <dc.EditItemDialogNoQuantity onClose={handleCloseDialog} item={item}/>}  
-      <button onClick={handleRemove}>Delete Item</button>
       {isRemoving && <dc.RemoveItemDialogGlobal onClose={handleCloseDialog} item={item}/>}  
     </div>
   );

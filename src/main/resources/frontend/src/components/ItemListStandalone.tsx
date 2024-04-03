@@ -28,9 +28,15 @@ const ItemListStandalone: React.FC<ItemListProps> = ({ items, refreshMethod}) =>
   return (
     <div>
       <h1>Item Entries</h1>
-      {items.map((item) => (
-        <SimpleItemEntry key={item.itemid} item={item} refreshMethod={refreshMethod} />
-      ))}
+
+      <ul className="inner-list">
+        {items.map((item) => (
+          <li key={item.name}>
+            <SimpleItemEntry key={item.itemid} item={item} refreshMethod={refreshMethod} />
+          </li>
+        ))}
+      </ul>
+      
     </div>
   );
 };

@@ -35,14 +35,19 @@ const ItemList: React.FC<ItemListProps> = ({ items, warehouse, refreshMethod}) =
   };
 
   return (
-    <div>
+    <div className="">
       <h1>Item Entries</h1>
-      <button onClick={handleAdd}>Add new item to warehouse</button>
+      <button className="button" onClick={handleAdd}>Add new item to warehouse</button>
       {isAdding && <dc.AddItemDialog onClose={handleCloseDialog} warehouse={warehouse}/>}        
 
-      {items.map((item) => (
-        <ItemEntry key={item.itemid} item={item} warehouse={warehouse} refreshMethod={refreshMethod} />
-      ))}
+      <ul className="inner-list">
+        {items.map((item) => (
+          <li key={item.name}>
+            <ItemEntry key={item.itemid} item={item} warehouse={warehouse} refreshMethod={refreshMethod} />
+          </li>
+        ))} 
+      </ul>
+      
     </div>
   );
 };

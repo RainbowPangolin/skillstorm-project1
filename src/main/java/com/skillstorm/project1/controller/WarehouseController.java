@@ -123,6 +123,23 @@ public class WarehouseController {
         }
     }
 
+    @DeleteMapping("/api/itemlist/{itemName}")
+    public ResponseEntity<String> deleteItem(@PathVariable String itemName) {
+        try {
+            // Retrieve the warehouse
+            Item existingItem = warehouseService.getItemByName(itemName);
+            if (existingItem == null) {
+                return new ResponseEntity<>("item with name " + itemName + " not found", HttpStatus.NOT_FOUND);
+            }
+
+            warehouseService.deleteItemFromAllWarehouses(itemName);
+
+            return new ResponseEntity<>("Item deleted from all warehouses successfully", HttpStatus.CREATED);
+        } catch (Exception e) {
+            return new ResponseEntity<>("Failed to update warehouse: " + e.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+    }
+
     @PutMapping("/api/{warehouseName}")
     public ResponseEntity<String> updateWarehouse(@PathVariable String warehouseName, @RequestBody Warehouse warehouse) {
         try {
