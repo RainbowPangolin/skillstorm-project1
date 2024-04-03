@@ -10,7 +10,6 @@ import org.springframework.stereotype.Service;
 import com.skillstorm.project1.model.Item;
 import com.skillstorm.project1.model.Warehouse;
 import com.skillstorm.project1.model.WarehouseItem;
-import com.skillstorm.project1.model.WarehouseItemKey;
 import com.skillstorm.project1.repository.ItemRepository;
 import com.skillstorm.project1.repository.WarehouseItemRepository;
 import com.skillstorm.project1.repository.WarehouseRepository;
@@ -34,7 +33,7 @@ public class WarehouseService {
     }
 
     public Warehouse getWarehouseByName(String warehouseName) {
-        long nameHash = warehouseName.hashCode();
+        long nameHash = returnUniqueHash(warehouseName);
         return warehouseRepository.findById(nameHash).orElse(null);
     }
 
@@ -46,27 +45,27 @@ public class WarehouseService {
     }
 
     public Item getItemByName(String name) {
-        Long itemid = (long) name.hashCode();
+        Long itemid = (long) returnUniqueHash(name);
         return this.getItemById(itemid);
     }
 
     public Warehouse saveWarehouse (Warehouse warehouse){
         String warehouseName = warehouse.getName();
-        Long hash = (long) warehouseName.hashCode();
+        Long hash = (long) returnUniqueHash(warehouseName);
         warehouse.setWarehouseid(hash);
         return warehouseRepository.save(warehouse);
     }
 
     public Item saveItem (Item item){
         String warehouseName = item.getName();
-        Long hash = (long) warehouseName.hashCode();
+        Long hash = (long) returnUniqueHash(warehouseName);
         item.setItemid(hash);
         return itemRepository.save(item);
     }
 
     public Long saveItemReturnId (Item item){
         String warehouseName = item.getName();
-        Long hash = (long) warehouseName.hashCode();
+        Long hash = (long) returnUniqueHash(warehouseName);
         item.setItemid(hash);
         return item.getItemid();
     }
@@ -95,12 +94,9 @@ public class WarehouseService {
         return this.getAllItemsFromWarehouse(warehouse);
     }
 
-    // TODO Improve Hash collision
-
     @Transactional
     public void insertItemIntoWarehouse(Item item, Warehouse warehouse){
         try{
-
             Integer newQuantity = item.getQuantity();
 
             Integer curUtilization = warehouseItemRepository.findUtilizationOfWarehouseCapacity(warehouse);
@@ -140,22 +136,20 @@ public class WarehouseService {
 
     @Transactional
     public void updateWarehouse(String oldWarehouseName, Warehouse warehouse){
-
         Long old_w_id = (long) returnUniqueHash(oldWarehouseName);
 
         Warehouse oldWarehouse = warehouseRepository.getById(old_w_id);
 
+        // Add new warehouse to replace old one
+        this.saveWarehouse(warehouse); 
 
-        //Add new warehouse
-        this.saveWarehouse(warehouse);
-
-        //Reassign warehouseID's in warehouseItem table
+        // Reassign warehouseID's in warehouseItem table
         List<Item> listOfItems = warehouseItemRepository.findItemsByWarehouse(oldWarehouse);
         for (Item i : listOfItems){
             this.insertItemIntoWarehouse(i, warehouse);
         }
 
-        //Delete old warehouse
+        // Delete old warehouse
         List<Long> oldIds = warehouseItemRepository.findAllIdsByWarehouse(oldWarehouse);
         for(Long o : oldIds){
             warehouseItemRepository.deleteById(o);
@@ -178,14 +172,11 @@ public class WarehouseService {
 
     @Transactional
     public void deleteItemFromWarehouse(String itemName, String warehouseName){
-
-        Long itemId = (long) itemName.hashCode();
-        Long warehouseId = (long) warehouseName.hashCode();
+        Long itemId = (long) returnUniqueHash(itemName);
+        Long warehouseId = (long) returnUniqueHash(warehouseName);
         Long wi_id = warehouseItemRepository.findWarehouseItemIdByWarehouseIdAndItemId(warehouseId, itemId);
 
         warehouseItemRepository.deleteById(wi_id);
-
-        //TODO Check if any warehouse still has item. If not, delete from items table. 
 
         Item searchItem = this.getItemById(itemId);
 
@@ -225,8 +216,7 @@ public class WarehouseService {
 
     @Transactional
     public void updateItem(String oldItemName, Item newItem){
-
-        Long old_i_id = (long) returnUniqueHash(oldItemName); //TODO Replace all instances of hashCode() with this.
+        Long old_i_id = (long) returnUniqueHash(oldItemName); 
 
         Item oldItem = itemRepository.getById(old_i_id);
 
@@ -242,7 +232,6 @@ public class WarehouseService {
 
             System.out.println(tempItem.getName());
 
-            // newItems.add(tempItem);
             this.insertItemIntoWarehouse(tempItem, w);
             this.deleteItemFromWarehouse(oldItemName, w.getName());
         }

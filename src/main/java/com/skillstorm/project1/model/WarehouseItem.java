@@ -1,14 +1,11 @@
 package com.skillstorm.project1.model;
 
-import jakarta.persistence.EmbeddedId;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
-import jakarta.persistence.ManyToMany;
 import jakarta.persistence.ManyToOne;
-import jakarta.persistence.MapsId;
 import jakarta.persistence.Table;
 
 @Entity
@@ -63,8 +60,5 @@ public class WarehouseItem {
     public void setId(Long id) {
         this.id = id;
     }
-
-    
-
     
 }

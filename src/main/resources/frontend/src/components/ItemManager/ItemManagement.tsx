@@ -1,7 +1,7 @@
 
 import React, { useEffect, useState } from 'react';
 import ItemListStandalone from './ItemListStandalone';
-import { Item } from '../interfaces/Item';
+import { Item } from '../../interfaces/Item';
 
 
 interface ItemManagementProps {}

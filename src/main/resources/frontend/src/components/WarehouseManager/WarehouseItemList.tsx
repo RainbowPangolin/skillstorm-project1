@@ -1,8 +1,8 @@
 import React, { useState } from 'react';
 import ItemEntry from './WarehouseItemEntry'; // Assuming the file path of your ItemEntry component
-import { Item } from '../interfaces/Item';
-import * as dc from './DialogComponents';
-import { Warehouse } from '../interfaces/Warehouse';
+import { Item } from '../../interfaces/Item';
+import * as dc from '../DialogComponents';
+import { Warehouse } from '../../interfaces/Warehouse';
 
 interface ItemListProps {
   items: Item[];

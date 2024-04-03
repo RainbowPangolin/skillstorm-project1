@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import './App.css';
-import WarehouseManagement from './components/WarehouseManagement';
-import ItemManagement from './components/ItemManagement';
+import WarehouseManagement from './components/WarehouseManager/WarehouseManagement';
+import ItemManagement from './components/ItemManager/ItemManagement';
 
 function App() {
   const [showWarehouseManagement, setShowWarehouseManagement] = useState<boolean>(true);

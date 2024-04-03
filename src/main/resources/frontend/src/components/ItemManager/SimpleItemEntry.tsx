@@ -1,15 +1,14 @@
-import * as dc from './DialogComponents';
+import * as dc from '../DialogComponents';
 import React, { useState } from 'react';
-import { Item } from '../interfaces/Item';
-import { Warehouse } from '../interfaces/Warehouse';
+import { Item } from '../../interfaces/Item';
+import { Warehouse } from '../../interfaces/Warehouse';
 
 interface ItemComponentProps {
   item: Item;
-  warehouse: Warehouse;
   refreshMethod: () => void; 
 }
 
-const ItemEntry: React.FC<ItemComponentProps> = ({ item, warehouse, refreshMethod }) => {
+const SimpleItemEntry: React.FC<ItemComponentProps> = ({ item, refreshMethod }) => {
   const [isEditing, setIsEditing] = useState(false);
   const [isRemoving, setIsRemoving] = useState(false);
  
@@ -39,13 +38,13 @@ const ItemEntry: React.FC<ItemComponentProps> = ({ item, warehouse, refreshMetho
       <div>Name: {item.name}</div>
       <div>Quantity: {item.quantity}</div>
       <div className="button-container">
-        <button className="button inner-button" onClick={handleEdit}>Edit</button>
-        <button className="button inner-button" onClick={handleRemove}>Delete</button>
+        <button className="inner-button" onClick={handleEdit}>Edit</button>
+        <button className="inner-button" onClick={handleRemove}>Delete</button>
       </div>
-      {isEditing && <dc.EditItemDialog onClose={handleCloseDialog} item={item} warehouse={warehouse}/>}  
-      {isRemoving && <dc.RemoveItemDialog onClose={handleCloseDialog} item={item} warehouse={warehouse}/>}  
+      {isEditing && <dc.EditItemDialogNoQuantity onClose={handleCloseDialog} item={item}/>}  
+      {isRemoving && <dc.RemoveItemDialogGlobal onClose={handleCloseDialog} item={item}/>}  
     </div>
   );
 };
 
-export default ItemEntry;
+export default SimpleItemEntry;

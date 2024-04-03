@@ -1,8 +1,8 @@
 import React, { useEffect, useState } from 'react';
 import ItemList from './WarehouseItemList'; 
-import { Warehouse } from '../interfaces/Warehouse'; // Import Warehouse interface
-import { Item } from '../interfaces/Item'; // Import Warehouse interface
-import * as dc from './DialogComponents';
+import { Warehouse } from '../../interfaces/Warehouse'; // Import Warehouse interface
+import { Item } from '../../interfaces/Item'; // Import Warehouse interface
+import * as dc from '../DialogComponents';
 
 
 

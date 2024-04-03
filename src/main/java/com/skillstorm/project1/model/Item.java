@@ -1,10 +1,7 @@
 package com.skillstorm.project1.model;
 
-import java.util.Set;
-
 import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
-import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
 
 

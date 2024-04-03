@@ -19,7 +19,6 @@ public interface WarehouseItemRepository extends JpaRepository<WarehouseItem, Lo
     @Query("SELECT wi.quantity FROM WarehouseItem wi WHERE wi.warehouse = :warehouse AND wi.item = :item")
     Integer findItemQuantityInWarehouse(@Param("item") Item item, @Param("warehouse") Warehouse warehouse);
 
-
     @Query("SELECT wi.item, wi.quantity FROM WarehouseItem wi WHERE wi.warehouse = :warehouse")
     List<Object[]> findItemsWithStoredQuantityByWarehouse(@Param("warehouse") Warehouse warehouse);
 
@@ -39,7 +38,6 @@ public interface WarehouseItemRepository extends JpaRepository<WarehouseItem, Lo
                         @Param("item") Item item, 
                         @Param("quantityIncrement") int quantityIncrement);
 
-
     @Query("SELECT wi.id FROM WarehouseItem wi WHERE wi.warehouse.id = :warehouseId AND wi.item.id = :itemId")
     Long findWarehouseItemIdByWarehouseIdAndItemId(@Param("warehouseId") Long warehouseId, @Param("itemId") Long itemId);
     
@@ -47,8 +45,6 @@ public interface WarehouseItemRepository extends JpaRepository<WarehouseItem, Lo
     @Query("DELETE FROM WarehouseItem wi WHERE wi.id = :warehouseItemId")
     void deleteRowById(@Param("warehouseItemId") Long warehouseItemId);
     
-
-
     @Query("SELECT COALESCE(SUM(wi.quantity), 0) FROM WarehouseItem wi WHERE wi.warehouse = :warehouse")
     Integer findUtilizationOfWarehouseCapacity(@Param("warehouse") Warehouse warehouse);
 
