@@ -1,5 +1,0 @@
-- Quick refactor (remove garbage comments and unused code)
-- Conitnue to improve ui
-    - Turn lists into tables?
-    - Give Top buttons (warehousemanager | itemmanager) a background
-

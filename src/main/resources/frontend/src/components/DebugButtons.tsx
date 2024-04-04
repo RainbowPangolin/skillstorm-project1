@@ -82,8 +82,6 @@ const DebugButtons = () => {
             }
 
             // Add items to warehouses randomly (not implemented in this code)
-            
-
             console.log('Debug items added successfully');
         } catch (error) {
             console.error('Error adding debug items:', error);
@@ -116,9 +114,9 @@ const DebugButtons = () => {
     }
 
     return (
-        <div style={{ position: 'fixed', bottom: '20px', right: '20px', zIndex: '1000' }}>
-            <Button color="info" onClick={updateDatabase}>Add Debug Items</Button>
-            <Button color="danger" onClick={cleanDatabase}>Wipe Database</Button>
+        <div style={{ display:'flex', position: 'fixed', bottom: '4%', right: '4%', zIndex: '1000' }}>
+            <Button className="debug-buttons" color="info" onClick={updateDatabase}>Add Debug Items</Button>
+            <Button className="debug-buttons" color="danger" onClick={cleanDatabase}>Wipe Database</Button>
         </div>
     );
 }

@@ -33,7 +33,7 @@ const StatusCheck: React.FC<StatusCheckProps> = ({ response }) => {
         } else if (response.status === 422) {
           setAlertContent(
             <Alert color="warning">
-              Operation canceled. {message}
+              {message}
             </Alert>
           );
         } else {

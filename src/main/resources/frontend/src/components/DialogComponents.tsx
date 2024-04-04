@@ -46,11 +46,6 @@ export const AddWarehouseDialog: React.FC<DialogProps> = ({ onClose }) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
   };
 
-  // const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
-  //   e.preventDefault();
-  //   await submitForm(`${API_BASE_URL}/warehouse`, 'POST', formData, onClose);
-  // };
-
     //Customized handleSubmit to return a response. I should have designed this system better. 
     const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
       e.preventDefault();
@@ -90,10 +85,12 @@ export const AddWarehouseDialog: React.FC<DialogProps> = ({ onClose }) => {
           </FormGroup>
           <FormGroup>
             <Label for="capacity">Capacity:</Label>
-            <Input type="text" id="capacity" name="capacity" value={formData.capacity} onChange={handleChange} required />
+            <Input type="number" id="capacity" name="capacity" value={formData.capacity} onChange={handleChange} required />
           </FormGroup>
-          <Button type="submit">Submit</Button>
-          <Button type="button" onClick={onClose}>Close</Button>
+          <div className='container'>
+            <Button color="info" className="inner-button" type="submit">Submit</Button>
+            <Button color="primary" className="inner-button" type="button" onClick={onClose}>Close</Button>
+          </div>
         </Form>
       </div>
     </div>
@@ -101,21 +98,40 @@ export const AddWarehouseDialog: React.FC<DialogProps> = ({ onClose }) => {
 };
 
 export const EditWarehouseDialog: React.FC<WarehouseDialogProps> = ({ onClose, warehouse }) => {
-  const [formData, setFormData] = useState({ name: warehouse?.name || '', location: warehouse?.location || '' });
+  const [formData, setFormData] = useState({ name: warehouse?.name || '', location: warehouse?.location || '' , capacity: warehouse?.capacity || 0});
+  const [response, setResponse] = useState<Response | null>(null);
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
   };
 
-  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
-    e.preventDefault();
-    await submitForm(`${API_BASE_URL}/${warehouse?.name}`, 'PUT', formData, onClose);
-  };
-
+    //Customized handleSubmit to return a response. I should have designed this system better. 
+    const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
+      e.preventDefault();
+      try {
+        let response = await fetch(`${API_BASE_URL}/${warehouse?.name}`, {
+          method: 'PUT',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify(formData),
+        });
+        setResponse(response);
+        if (!response.ok) {
+          throw new Error(`Failed to add new warehouse`);
+        }
+  
+        onClose();
+      } catch (error) {
+        console.error('Error adding warehouse:', error);
+      }
+    };
+  
   return (
     <div className="dialog-overlay">
       <div className="dialog-content">
         <h2>Edit Warehouse {warehouse?.name}</h2>
+        <StatusDisplay response={response} />
         <Form onSubmit={handleSubmit}>
           <FormGroup>
             <Label for="name">Name:</Label>
@@ -124,6 +140,10 @@ export const EditWarehouseDialog: React.FC<WarehouseDialogProps> = ({ onClose, w
           <FormGroup>
             <Label for="location">Location:</Label>
             <Input type="text" id="location" name="location" value={formData.location} onChange={handleChange} required />
+          </FormGroup>
+          <FormGroup>
+            <Label for="capacity">Capacity:</Label>
+            <Input type="number" id="capacity" name="capacity" value={formData.capacity} onChange={handleChange} required />
           </FormGroup>
           <Button type="submit">Submit</Button>
           <Button type="button" onClick={onClose}>Close</Button>
@@ -233,20 +253,42 @@ export const RemoveItemDialog: React.FC<ItemDialogProps> = ({ onClose, item, war
 
 export const EditItemDialog: React.FC<ItemDialogProps> = ({ onClose, item, warehouse }) => {
   const [formData, setFormData] = useState({ name: item?.name || '', description: item?.description || '', quantity: item?.quantity || 0 });
+  const [response, setResponse] = useState<Response | null>(null);
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
   };
 
+
+  //Customized handleSubmit to return a response. I should have designed this system better. 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    await submitForm(`${API_BASE_URL}/items/${warehouse?.name}/${item?.name}`, 'PUT', formData, onClose);
+    try {
+      const response = await fetch(`http://localhost:8080/api/items/${warehouse?.name}/${item?.name}`, {
+        method: 'PUT',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(formData),
+      });
+
+      setResponse(response);
+
+      if (!response.ok) {
+        throw new Error(`Failed to add item to warehouse ${warehouse?.name}`);
+      }
+
+      onClose();
+    } catch (error) {
+      console.error('Error adding warehouse:', error);
+    }
   };
 
   return (
     <div className="dialog-overlay">
       <div className="dialog-content">
         <h2>Edit Item in {warehouse?.name}</h2>
+        <StatusDisplay response={response} />
         <Form onSubmit={handleSubmit}>
           <FormGroup>
             <Label for="name">Name:</Label>
@@ -258,7 +300,7 @@ export const EditItemDialog: React.FC<ItemDialogProps> = ({ onClose, item, wareh
           </FormGroup>
           <FormGroup>
             <Label for="quantity">Quantity:</Label>
-            <Input type="text" id="quantity" name="quantity" value={formData.quantity} onChange={handleChange} required />
+            <Input type="number" id="quantity" name="quantity" value={formData.quantity} onChange={handleChange} required />
           </FormGroup>
           <Button type="submit">Submit</Button>
           <Button type="button" onClick={onClose}>Close</Button>
@@ -269,6 +311,7 @@ export const EditItemDialog: React.FC<ItemDialogProps> = ({ onClose, item, wareh
 };
 
 export const EditItemDialogNoQuantity: React.FC<ItemDialogProps> = ({ onClose, item }) => {
+
   const [formData, setFormData] = useState({ name: item?.name || '', description: item?.description || '' });
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {

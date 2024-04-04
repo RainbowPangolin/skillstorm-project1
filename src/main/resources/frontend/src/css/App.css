@@ -1,11 +1,12 @@
 * {
-  font-family: 'Roboto', sans-serif; /* Replace 'Roboto' with the font family name you imported */
+  font-family: 'Roboto', sans-serif; 
 }
 
 .App {
   display: block;
   justify-content: center;
   align-items: center;
+  margin-bottom: 200px;
   }
 
 .App-header {
@@ -16,7 +17,7 @@
 }
 
 body {
-  background-color: #ffffff;
+  background-color: #f5f5f5;
 }
 
 .App-header {
@@ -74,6 +75,7 @@ body {
   justify-content: center;
   align-items: center;
   margin: auto; 
+  border: 2px solid #c7c7c7; 
 }
 
 .card {
@@ -83,11 +85,11 @@ body {
 }
 
 .primary-card {
-  background-color: #f8f9fa;
+  background-color: #f5f5f5;
 }
 
 .secondary-card {
-  background-color: #ffffff;
+  background-color: #f5f5f5;
 }
 
 
@@ -191,12 +193,16 @@ body {
 }
 
 .title-line {
-  background-color: #c4e0ff;
+  background-color: #d6e2f1;
 }
 
 .management-card {
   background-color: #ffffff;
   /* margin-top: 80px;  */
+}
+
+.standard-background{
+  background-color: #f5f5f5;
 }
 
 .white-background{
@@ -219,7 +225,7 @@ body {
   border: 2px solid #cecece; 
   /* border-radius: 5px; */
 
-  background-color: #edfffc;
+  background-color: hsl(184, 36%, 91%);
 
   box-shadow: 10px 5px 5px rgba(0, 0, 50, 0.1);
 
@@ -230,13 +236,30 @@ body {
 
 .warehouse-title{
   display: flex;
-  /* margin: 5px;
-  padding: 6px */
+
 }
 
 
- .warehouse-title> * {
+ .warehouse-title > * {
+  display: flex;
   margin: 5px;
-  padding: 6px
+  padding: 6px;
 } 
 
+.warehouse-title > p > p {
+  margin-right: 5px;
+} 
+
+.shadowy {
+  box-shadow: 10px 5px 5px rgba(0, 0, 50, 0.1);
+}
+
+.very-shadowy {
+  box-shadow: 10px 5px 5px rgba(0, 0, 50, 0.1);
+}
+
+.debug-buttons{
+  box-shadow: 10px 5px 5px rgba(0, 0, 50, 0.1);
+  border: 2px solid #333333; 
+  margin: 1%;
+}

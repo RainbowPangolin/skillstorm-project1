@@ -34,7 +34,7 @@ function App() {
   return (
     <div className="App">
       <header className="App-header">
-        <Navbar className="top-nav">
+        <Navbar className="top-nav roboto-light">
         <NavLink color="primary" onClick={toggleThirdComponent}>Home</NavLink>
           <div className="button-container horizontal-present">  
             <NavLink color="primary" onClick={toggleWarehouseManagement}>WarehouseManager</NavLink>

@@ -118,15 +118,18 @@ public class WarehouseService {
     }
 
     @Transactional
-    public void insertItemIntoWarehouse(Item item, Warehouse warehouse){
+    public void insertItemIntoWarehouse(Item item, Warehouse warehouse, Boolean checkingCapacity){
         try{
             Integer newQuantity = item.getQuantity();
 
             Integer curUtilization = warehouseItemRepository.findUtilizationOfWarehouseCapacity(warehouse);
 
-            if(curUtilization + newQuantity > warehouse.getCapacity()){
-                throw new RuntimeException("Adding the item would surpass the capacity of the warehouse");
+            if(checkingCapacity){
+                if(curUtilization + newQuantity > warehouse.getCapacity()){
+                    throw new RuntimeException("Operation canceled: Adding the item would surpass the capacity of the warehouse");
+                }
             }
+
 
             Item curItem = this.saveItem(item);
 
@@ -159,27 +162,37 @@ public class WarehouseService {
 
     @Transactional
     public void updateWarehouse(String oldWarehouseName, Warehouse warehouse){
+        Long new_w_idLong = (long) returnUniqueHash(warehouse.getName());
+
+        warehouse.setWarehouseid(new_w_idLong);
         Long old_w_id = (long) returnUniqueHash(oldWarehouseName);
 
         Warehouse oldWarehouse = warehouseRepository.getById(old_w_id);
 
-        // Add new warehouse to replace old one
-        this.saveWarehouse(warehouse); 
-
-        // Reassign warehouseID's in warehouseItem table
-        List<Item> listOfItems = warehouseItemRepository.findItemsByWarehouse(oldWarehouse);
-        for (Item i : listOfItems){
-            this.insertItemIntoWarehouse(i, warehouse);
+        Integer curUtilization = this.getWarehouseUtilization(warehouse);
+        if (curUtilization > warehouse.getCapacity()){
+            throw new RuntimeException("Operation failed: Warehouse cannot hold all existing items");
         }
 
-        // Delete old warehouse
-        List<Long> oldIds = warehouseItemRepository.findAllIdsByWarehouse(oldWarehouse);
-        for(Long o : oldIds){
-            warehouseItemRepository.deleteById(o);
+        warehouseRepository.save(warehouse); 
+
+        if (oldWarehouse.getName() == warehouse.getName()){
+            //do nothing
+        } else {
+            // Reassign warehouseID's in warehouseItem table
+            List<Item> listOfItems = warehouseItemRepository.findItemsByWarehouse(oldWarehouse);
+            for (Item i : listOfItems){
+                this.insertItemIntoWarehouse(i, warehouse, true);
+            }
+
+            // Delete old warehouse
+            List<Long> oldIds = warehouseItemRepository.findAllIdsByWarehouse(oldWarehouse);
+            for(Long o : oldIds){
+                warehouseItemRepository.deleteById(o);
+            }
+
+            warehouseRepository.deleteById(old_w_id);
         }
-
-        warehouseRepository.deleteById(old_w_id);
-
 
     }
 
@@ -229,10 +242,9 @@ public class WarehouseService {
     public void updateWarehouseItem(Warehouse warehouse, Item oldItem, Item newItem){
         Long oldItemId = oldItem.getItemid();
         Long warehouseId = warehouse.getWarehouseid();
-        System.out.printf(" ---------- \n\n %d \n\n -------------- \n", oldItemId); 
         Long wi_id = warehouseItemRepository.findWarehouseItemIdByWarehouseIdAndItemId(warehouseId, oldItemId);
         warehouseItemRepository.deleteById(wi_id);;
-        this.insertItemIntoWarehouse(newItem, warehouse);
+        this.insertItemIntoWarehouse(newItem, warehouse, true);
 
     }
 
@@ -249,14 +261,11 @@ public class WarehouseService {
         for (Warehouse w : listOfWarehouses){
             Integer oldQuantity = warehouseItemRepository.findItemQuantityInWarehouse(oldItem, w);
 
-            System.out.println("\n\n" + oldQuantity + "\n\n");
             Item tempItem = newItem.deepCopy();
             tempItem.setQuantity(oldQuantity);
 
-            System.out.println(tempItem.getName());
-
-            this.insertItemIntoWarehouse(tempItem, w);
             this.deleteItemFromWarehouse(oldItemName, w.getName());
+            this.insertItemIntoWarehouse(tempItem, w, false);
         }
 
     }

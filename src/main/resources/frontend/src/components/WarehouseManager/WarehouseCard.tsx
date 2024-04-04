@@ -75,15 +75,32 @@ const WarehouseCard: React.FC<WarehouseProps> = ({warehouse, refreshMethod}) => 
     fetchUtilization();
   };
 
+  // A real gradient would be nicer but this was faster
+  const getUtilizationColor = () => {
+    const ratio = utilization / warehouse.capacity;
+  
+    if (ratio < 0.2) {
+      return '#00aa00';
+    } else if (ratio < 0.4) {
+      return '#eeac00'; 
+    } else if (ratio < 0.6) {
+      return 'orange'; 
+    } else if (ratio < 0.8) {
+      return 'orangered'; 
+    } else {
+      return 'darkred'; 
+    }
+  };
+  
   return (
-    <div >
+    <div>
       <div className="item-list-container">
         <div className="flex-grow-item" >
-          <div className="warehouse-title" style={{ cursor: 'pointer' }} onClick={handleSpoilerToggle}>
+          <div className="warehouse-title roboto-medium" style={{ cursor: 'pointer' }} onClick={handleSpoilerToggle}>
             <p>{isSpoilerOpen ? '▼' : '►'}</p> 
             <p>{warehouse.name}</p>
             <p>{warehouse.location}</p>
-            <p>{utilization} out of {warehouse.capacity}</p>
+            <p><p style={{ color: getUtilizationColor()}}>{utilization}</p> <p>out of </p><p style={{ color: getUtilizationColor()}}> {warehouse.capacity}</p></p>
           </div>
         </div>
 

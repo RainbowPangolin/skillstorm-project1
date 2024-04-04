@@ -3,7 +3,7 @@
    1. warehouseid
    2. name
    3. location
-   4. description
+   4. Capacity
 2. Items
    1. itemid
    2. name

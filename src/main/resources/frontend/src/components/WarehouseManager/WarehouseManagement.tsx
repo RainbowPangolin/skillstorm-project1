@@ -46,13 +46,12 @@ const WarehouseManagement: React.FC<WarehouseManagementProps> = () => {
   }, []);
 
   return (
-    <div className="roomy">
-      <Table className="management-card">
-        <CardBody>
+      <Table>
+        <CardBody >
 
-          <div className="horizontal-present title-line">
+          <div className="horizontal-present title-line warehouse-header ">
             <CardTitle tag="h3">Manage Warehouses</CardTitle>
-            <Button className="inner-button" style={{ backgroundColor: 'cyan', color: 'black' }} onClick={handleAddWarehouse}>Add warehouse</Button>
+            <Button className="inner-button" style={{ backgroundColor: '#aaffff', color: 'black', margin: '2%' }} onClick={handleAddWarehouse}>Add warehouse</Button>
           </div>
 
           {isDialogOpen && <dc.AddWarehouseDialog onClose={handleCloseDialog} />}        
@@ -60,7 +59,7 @@ const WarehouseManagement: React.FC<WarehouseManagementProps> = () => {
           {data ? (
             <ListGroup className="mt-3">
               {data.map(wh => (
-                <ListGroupItem key={wh.name}>
+                <ListGroupItem key={wh.name} >
                   <WarehouseCard warehouse={wh} refreshMethod={refreshWarehouses}/>
                 </ListGroupItem>
               ))}
@@ -70,7 +69,6 @@ const WarehouseManagement: React.FC<WarehouseManagementProps> = () => {
           )}
         </CardBody>
       </Table>
-    </div>
     
   );
 };

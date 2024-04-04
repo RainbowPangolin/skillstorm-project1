@@ -25,9 +25,9 @@ const ItemList: React.FC<ItemListProps> = ({ items, warehouse, refreshMethod }) 
 
   return (
     <div>
-      <div className="horizontal-present">
+      <div className="horizontal-present title-line warehouse-header ">
         <CardTitle tag="h3">Item List</CardTitle>
-        <Button color="secondary" onClick={handleAdd}>Add new item to warehouse</Button>
+        <Button className="inner-button" style={{ backgroundColor: '#aaffff', color: 'black', margin: '2%' }}  onClick={handleAdd}>Add new item to warehouse</Button>
       </div>
       {isAdding && <dc.AddItemDialog onClose={handleCloseDialog} warehouse={warehouse} />}        
 
