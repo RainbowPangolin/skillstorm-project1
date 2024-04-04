@@ -1,32 +1,32 @@
-.App {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  
-  height: 100vh;
+* {
+  font-family: 'Roboto', sans-serif; /* Replace 'Roboto' with the font family name you imported */
 }
 
+.App {
+  display: block;
+  justify-content: center;
+  align-items: center;
+  }
+
 .App-header {
-  position: relative;
 }
 
 .App-logo {
-  height: 40vmin;
   pointer-events: none;
 }
 
 body {
-  background-color: #ececec;
+  background-color: #ffffff;
 }
 
 .App-header {
-  min-height: 100vh;
+  min-height: 10vh;
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
   font-size: calc(5px + 2vmin);
-  width: calc(100vw - 40px); 
+  width: calc(100vw - 4px); 
   color: black;
 }
 
@@ -47,12 +47,12 @@ body {
 .inner-button {
   font-size: calc(5px + 1vmin);
   padding: 5px 5px;
+  margin-right: 5px;
 }
 
 .button-container {
   position: sticky;
   top: 0;
-  z-index: 999; /* Adjust z-index as needed */
 }
 
 .primary-button {
@@ -73,10 +73,10 @@ body {
   display: flex;
   justify-content: center;
   align-items: center;
+  margin: auto; 
 }
 
 .card {
-  width: calc(80vw);
   padding: 20px;
   border-radius: 8px;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
@@ -196,6 +196,7 @@ body {
 
 .management-card {
   background-color: #ffffff;
+  /* margin-top: 80px;  */
 }
 
 .white-background{
@@ -205,3 +206,37 @@ body {
 .padded{
   margin-top: 20px;
 }
+
+.collapsible-header:hover {
+  background-color: #f0f0f0; 
+}
+
+.top-nav {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  border: 2px solid #cecece; 
+  /* border-radius: 5px; */
+
+  background-color: #edfffc;
+
+  box-shadow: 10px 5px 5px rgba(0, 0, 50, 0.1);
+
+}
+.roomy{
+  width: 80vw;
+}
+
+.warehouse-title{
+  display: flex;
+  /* margin: 5px;
+  padding: 6px */
+}
+
+
+ .warehouse-title> * {
+  margin: 5px;
+  padding: 6px
+} 
+

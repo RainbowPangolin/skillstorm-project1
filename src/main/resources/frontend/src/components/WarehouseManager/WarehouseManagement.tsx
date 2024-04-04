@@ -46,29 +46,32 @@ const WarehouseManagement: React.FC<WarehouseManagementProps> = () => {
   }, []);
 
   return (
-    <Table className="management-card">
-      <CardBody>
+    <div className="roomy">
+      <Table className="management-card">
+        <CardBody>
 
-        <div className="horizontal-present title-line">
-          <CardTitle tag="h3">Manage Warehouses</CardTitle>
-          <Button color="secondary" onClick={handleAddWarehouse}>Add warehouse</Button>
-        </div>
+          <div className="horizontal-present title-line">
+            <CardTitle tag="h3">Manage Warehouses</CardTitle>
+            <Button className="inner-button" style={{ backgroundColor: 'cyan', color: 'black' }} onClick={handleAddWarehouse}>Add warehouse</Button>
+          </div>
 
-        {isDialogOpen && <dc.AddWarehouseDialog onClose={handleCloseDialog} />}        
+          {isDialogOpen && <dc.AddWarehouseDialog onClose={handleCloseDialog} />}        
 
-        {data ? (
-          <ListGroup className="mt-3">
-            {data.map(wh => (
-              <ListGroupItem key={wh.name}>
-                <WarehouseCard warehouse={wh} refreshMethod={refreshWarehouses}/>
-              </ListGroupItem>
-            ))}
-          </ListGroup>
-        ) : (
-          <p>Loading...</p>
-        )}
-      </CardBody>
-    </Table>
+          {data ? (
+            <ListGroup className="mt-3">
+              {data.map(wh => (
+                <ListGroupItem key={wh.name}>
+                  <WarehouseCard warehouse={wh} refreshMethod={refreshWarehouses}/>
+                </ListGroupItem>
+              ))}
+            </ListGroup>
+          ) : (
+            <p>Loading...</p>
+          )}
+        </CardBody>
+      </Table>
+    </div>
+    
   );
 };
 

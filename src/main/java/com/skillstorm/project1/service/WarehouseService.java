@@ -261,4 +261,12 @@ public class WarehouseService {
 
     }
 
+    @Transactional
+    public void cleanDatabase(){
+        warehouseItemRepository.deleteAll();
+
+        warehouseRepository.deleteAll();;
+        itemRepository.deleteAll();
+        }
+
 }

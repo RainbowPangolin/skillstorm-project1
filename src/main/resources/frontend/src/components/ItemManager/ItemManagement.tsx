@@ -36,19 +36,20 @@ const ItemManagement: React.FC<ItemManagementProps> = () => {
   }, []);
 
   return (
-    <Table className="management-card">
-      <CardBody>
-        <div className="horizontal-present title-line">
-        <CardTitle tag="h3">Manage Items</CardTitle>
-        </div>
+    <div className="roomy">
+      <Table className="management-card roomy" >
+          <div className="horizontal-present title-line">
+          <CardTitle tag="h3">Manage Items</CardTitle>
+          </div>
 
-      {data ? (
-        <ItemListStandalone items={data} refreshMethod={refreshItems}/>
-      ) : (
-        <p>Loading...</p>
-      )}
-      </CardBody>
-    </Table>
+        {data ? (
+          <ItemListStandalone items={data} refreshMethod={refreshItems}/>
+        ) : (
+          <p>Loading...</p>
+        )}
+      </Table>
+    </div>
+    
   );
 };
 

@@ -76,11 +76,14 @@ const WarehouseCard: React.FC<WarehouseProps> = ({warehouse, refreshMethod}) => 
   };
 
   return (
-    <div>
+    <div >
       <div className="item-list-container">
         <div className="flex-grow-item" >
-          <div style={{ cursor: 'pointer' }} onClick={handleSpoilerToggle}>
-            {isSpoilerOpen ? '▼' : '►'} {warehouse.name} | {warehouse.location} | {utilization} out of {warehouse.capacity}
+          <div className="warehouse-title" style={{ cursor: 'pointer' }} onClick={handleSpoilerToggle}>
+            <p>{isSpoilerOpen ? '▼' : '►'}</p> 
+            <p>{warehouse.name}</p>
+            <p>{warehouse.location}</p>
+            <p>{utilization} out of {warehouse.capacity}</p>
           </div>
         </div>
 
@@ -93,10 +96,10 @@ const WarehouseCard: React.FC<WarehouseProps> = ({warehouse, refreshMethod}) => 
         {isRemoving && <dc.RemoveWarehouseDialog onClose={handleCloseDialog} warehouse={warehouse} />}
       </div>
       
-      <Collapse isOpen={isSpoilerOpen}>
+      <Collapse isOpen={isSpoilerOpen} >
         {itemList && (
           <div>
-            <CardBody>
+            <CardBody >
               <ItemList items={itemList} warehouse={warehouse} refreshMethod={refreshItemList} />
             </CardBody>
           </div>

@@ -148,6 +148,16 @@ public class WarehouseController {
         }
     }
 
+    @DeleteMapping("/api/clean")
+    public ResponseEntity<String> cleanDatabase() {
+        try {
+            warehouseService.cleanDatabase();
+            return new ResponseEntity<>("Database cleaned.", HttpStatus.CREATED);
+        } catch (Exception e) {
+            return new ResponseEntity<>("Failed clean database: " + e.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+    }
+
     @PutMapping("/api/{warehouseName}")
     public ResponseEntity<String> updateWarehouse(@PathVariable String warehouseName, @RequestBody Warehouse warehouse) {
         try {
