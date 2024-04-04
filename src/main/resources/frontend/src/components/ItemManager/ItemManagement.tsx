@@ -3,7 +3,7 @@ import React, { useEffect, useState } from 'react';
 import ItemListStandalone from './ItemListStandalone';
 import { Item } from '../../interfaces/Item';
 
-import { Container, Row, Col } from 'reactstrap';
+import { Container, Row, Col, Card, CardBody, CardTitle, Table } from 'reactstrap';
 interface ItemManagementProps {}
 
 const ItemManagement: React.FC<ItemManagementProps> = () => {
@@ -36,14 +36,19 @@ const ItemManagement: React.FC<ItemManagementProps> = () => {
   }, []);
 
   return (
-    <div>
-      <h2>Item Management</h2>
+    <Table className="management-card">
+      <CardBody>
+        <div className="horizontal-present title-line">
+        <CardTitle tag="h3">Manage Items</CardTitle>
+        </div>
+
       {data ? (
         <ItemListStandalone items={data} refreshMethod={refreshItems}/>
       ) : (
         <p>Loading...</p>
       )}
-    </div>
+      </CardBody>
+    </Table>
   );
 };
 

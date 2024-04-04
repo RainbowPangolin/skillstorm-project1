@@ -3,7 +3,6 @@ import { Warehouse } from '../interfaces/Warehouse';
 import { Item } from '../interfaces/Item';
 import { Button, Form, FormGroup, Input, Label } from 'reactstrap';
 import StatusDisplay from './StatusDisplay';
-import { HttpResponse } from '../interfaces/HttpResponse';
 
 interface DialogProps {
   onClose: () => void;
@@ -41,20 +40,45 @@ const submitForm = async (url: string, method: string, formData: any, onClose: (
 
 export const AddWarehouseDialog: React.FC<DialogProps> = ({ onClose }) => {
   const [formData, setFormData] = useState({ name: '', location: '', capacity: 1 });
+  const [response, setResponse] = useState<Response | null>(null);
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
   };
 
-  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
-    e.preventDefault();
-    await submitForm(`${API_BASE_URL}/warehouse`, 'POST', formData, onClose);
-  };
+  // const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
+  //   e.preventDefault();
+  //   await submitForm(`${API_BASE_URL}/warehouse`, 'POST', formData, onClose);
+  // };
+
+    //Customized handleSubmit to return a response. I should have designed this system better. 
+    const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
+      e.preventDefault();
+      try {
+        let response = await fetch(`${API_BASE_URL}/warehouse`, {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify(formData),
+        });
+        setResponse(response);
+        if (!response.ok) {
+          throw new Error(`Failed to add new warehouse`);
+        }
+  
+        onClose();
+      } catch (error) {
+        console.error('Error adding warehouse:', error);
+      }
+    };
+  
 
   return (
     <div className="dialog-overlay">
       <div className="dialog-content">
         <h2>Add New Warehouse</h2>
+        <StatusDisplay response={response} />
         <Form onSubmit={handleSubmit}>
           <FormGroup>
             <Label for="name">Name:</Label>
@@ -131,7 +155,7 @@ export const RemoveWarehouseDialog: React.FC<WarehouseDialogProps> = ({ onClose,
 
 export const AddItemDialog: React.FC<ItemDialogProps> = ({ onClose, warehouse }) => {
   const [formData, setFormData] = useState({ name: '', description: '', quantity: 1 });
-  const [response, setResponse] = useState<HttpResponse | null>(null);
+  const [response, setResponse] = useState<Response | null>(null);
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });

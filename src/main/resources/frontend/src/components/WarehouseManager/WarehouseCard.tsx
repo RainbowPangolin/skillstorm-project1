@@ -95,12 +95,11 @@ const WarehouseCard: React.FC<WarehouseProps> = ({warehouse, refreshMethod}) => 
       
       <Collapse isOpen={isSpoilerOpen}>
         {itemList && (
-          <Card>
+          <div>
             <CardBody>
-              <CardTitle tag="h5">Item List</CardTitle>
               <ItemList items={itemList} warehouse={warehouse} refreshMethod={refreshItemList} />
             </CardBody>
-          </Card>
+          </div>
         )}
       </Collapse>
     </div>

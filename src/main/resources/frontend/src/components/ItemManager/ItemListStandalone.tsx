@@ -10,29 +10,13 @@ interface ItemListProps {
 }
 
 const ItemListStandalone: React.FC<ItemListProps> = ({ items, refreshMethod }) => {
-  const [isAdding, setIsAdding] = useState(false);
-
-  const handleAdd = () => {
-    setIsAdding(true);
-  };
-
-  const handleCloseDialog = () => {
-    refreshMethod();
-    setIsAdding(false);
-  };
 
   return (
-    <Container>
-      <h1>Item Entries</h1>
-      <Button color="primary" onClick={handleAdd}>Add new item</Button>
-      {isAdding && <dc.AddItemDialog onClose={handleCloseDialog} />}        
-
-      <Table striped bordered>
+      <Table striped bordered className="padded">
         <thead>
           <tr>
-            <th>ID</th>
             <th>Name</th>
-            <th>Quantity</th>
+            <th>Description</th>
             <th>Action</th>
           </tr>
         </thead>
@@ -42,7 +26,6 @@ const ItemListStandalone: React.FC<ItemListProps> = ({ items, refreshMethod }) =
           ))}
         </tbody>
       </Table>
-    </Container>
   );
 };
 

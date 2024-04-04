@@ -3,7 +3,7 @@ import './App.css';
 import WarehouseManagement from './components/WarehouseManager/WarehouseManagement';
 import ItemManagement from './components/ItemManager/ItemManagement';
 
-import { Container, Button } from 'reactstrap';
+import { Container, Button, Navbar, Nav } from 'reactstrap';
 
 function App() {
   const [showWarehouseManagement, setShowWarehouseManagement] = useState<boolean>(true);
@@ -22,15 +22,20 @@ function App() {
 
   return (
     <div className="App">
+      <Navbar>
+
+      </Navbar>
       <header className="App-header">
-        <Container>
-          <div className="button-container">
+        <Container className="vertical-present">
+          <Navbar className="button-container horizontal-present">
             <Button color="primary" onClick={toggleWarehouseManagement}>WarehouseManager</Button>
             <Button color="primary" onClick={toggleItemManagement}>ItemManager</Button>
-          </div>
-          {showWarehouseManagement && <WarehouseManagement />}
-          {showItemManagement && <ItemManagement />}
+          </Navbar>
         </Container>
+
+        {showWarehouseManagement && <WarehouseManagement />}
+        {showItemManagement && <ItemManagement />}
+
       </header>
     </div>
   );

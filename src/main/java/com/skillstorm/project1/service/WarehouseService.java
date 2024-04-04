@@ -52,6 +52,18 @@ public class WarehouseService {
     public Warehouse saveWarehouse (Warehouse warehouse){
         String warehouseName = warehouse.getName();
         Long hash = (long) returnUniqueHash(warehouseName);
+
+        Warehouse existingWarehouse = this.getWarehouseByName(warehouseName);
+
+        try{
+            if (existingWarehouse.getName().equals(warehouseName)){
+                throw new RuntimeException("Warehouse exists, cannot overwrite (use EDIT to change warehouse details)");
+            }
+        } catch(NullPointerException e){
+            System.out.println("No warehouse exists, adding new warehouse");
+        } 
+
+
         warehouse.setWarehouseid(hash);
         return warehouseRepository.save(warehouse);
     }

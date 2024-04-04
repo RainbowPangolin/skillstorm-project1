@@ -61,9 +61,14 @@ public class WarehouseController {
     }
 
     @PostMapping("/api/warehouse")
-    public ResponseEntity<Warehouse> createWarehouse(@RequestBody Warehouse warehouse) {
-        Warehouse newWarehouse = warehouseService.saveWarehouse(warehouse);
-        return new ResponseEntity<Warehouse>(newWarehouse, HttpStatus.OK);        
+    public ResponseEntity<String> createWarehouse(@RequestBody Warehouse warehouse) {
+        try {
+            warehouseService.saveWarehouse(warehouse);
+        }        
+        catch (RuntimeException e) {
+            return new ResponseEntity<>(e.getMessage(), HttpStatus.UNPROCESSABLE_ENTITY);
+        }
+        return new ResponseEntity<>("Warehouse Added", HttpStatus.OK);        
     }
 
     @PostMapping("/api/addItem")

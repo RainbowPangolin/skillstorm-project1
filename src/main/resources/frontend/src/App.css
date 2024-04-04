@@ -175,3 +175,33 @@ body {
 .drop-down {
 
 }
+
+.vertical-present {
+  display: block
+}
+
+.horizontal-present {
+  display:flex
+}
+
+.horizontal-present > * {
+  margin: 5px;
+
+  padding: 6px
+}
+
+.title-line {
+  background-color: #c4e0ff;
+}
+
+.management-card {
+  background-color: #ffffff;
+}
+
+.white-background{
+  background-color: #ffffff;
+}
+
+.padded{
+  margin-top: 20px;
+}

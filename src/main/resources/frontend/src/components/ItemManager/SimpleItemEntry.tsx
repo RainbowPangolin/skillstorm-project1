@@ -28,9 +28,8 @@ const SimpleItemEntry: React.FC<ItemComponentProps> = ({ item, refreshMethod }) 
 
   return (
     <tr>
-      <td>{item.itemid}</td>
       <td>{item.name}</td>
-      <td>{item.quantity}</td>
+      <td>{item.description}</td>
       <td>
         <Button color="primary" className="inner-button" onClick={handleEdit}>Edit</Button>
         <Button color="danger" className="inner-button" onClick={handleRemove}>Delete</Button>

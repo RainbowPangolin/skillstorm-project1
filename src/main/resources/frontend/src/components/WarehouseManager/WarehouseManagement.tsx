@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import WarehouseCard from './WarehouseCard';
 import { Warehouse } from '../../interfaces/Warehouse'; // Import Warehouse interface
 import * as dc from '../DialogComponents';
-import { Button, Card, CardBody, CardTitle, ListGroup, ListGroupItem } from 'reactstrap';
+import { Button, Card, CardBody, CardTitle, ListGroup, ListGroupItem, Table } from 'reactstrap';
 
 interface WarehouseManagementProps {}
 
@@ -46,15 +46,15 @@ const WarehouseManagement: React.FC<WarehouseManagementProps> = () => {
   }, []);
 
   return (
-    <Card>
+    <Table className="management-card">
       <CardBody>
-        <CardTitle tag="h5">Manage Warehouses</CardTitle>
 
-        <div>
-          <Button color="primary" onClick={handleAddWarehouse}>Add warehouse</Button>
-          {/* Render the dialog component if isDialogOpen is true */}
-          {isDialogOpen && <dc.AddWarehouseDialog onClose={handleCloseDialog} />}        
+        <div className="horizontal-present title-line">
+          <CardTitle tag="h3">Manage Warehouses</CardTitle>
+          <Button color="secondary" onClick={handleAddWarehouse}>Add warehouse</Button>
         </div>
+
+        {isDialogOpen && <dc.AddWarehouseDialog onClose={handleCloseDialog} />}        
 
         {data ? (
           <ListGroup className="mt-3">
@@ -68,7 +68,7 @@ const WarehouseManagement: React.FC<WarehouseManagementProps> = () => {
           <p>Loading...</p>
         )}
       </CardBody>
-    </Card>
+    </Table>
   );
 };
 
