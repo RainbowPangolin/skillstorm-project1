@@ -107,11 +107,11 @@ body {
 }
 
 .dialog-content {
-  background-color: #aaa; /* White background for modal content */
+  background-color: #dadada; 
   padding: 20px;
   border-radius: 5px;
-  box-shadow: 0 0 10px rgba(0, 0, 0, 0.3); /* Box shadow for depth */
-  max-width: 80%; /* Limit maximum width of modal content */
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.3); 
+  max-width: 80%; 
 }
 
 .list {

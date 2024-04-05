@@ -87,7 +87,7 @@ export const AddWarehouseDialog: React.FC<DialogProps> = ({ onClose }) => {
             <Label for="capacity">Capacity:</Label>
             <Input type="number" id="capacity" name="capacity" value={formData.capacity} onChange={handleChange} required />
           </FormGroup>
-          <div className='container'>
+          <div>
             <Button color="info" className="inner-button" type="submit">Submit</Button>
             <Button color="primary" className="inner-button" type="button" onClick={onClose}>Close</Button>
           </div>
@@ -130,7 +130,7 @@ export const EditWarehouseDialog: React.FC<WarehouseDialogProps> = ({ onClose, w
   return (
     <div className="dialog-overlay">
       <div className="dialog-content">
-        <h2>Edit Warehouse {warehouse?.name}</h2>
+        <h2>Editing {warehouse?.name}</h2>
         <StatusDisplay response={response} />
         <Form onSubmit={handleSubmit}>
           <FormGroup>
@@ -145,8 +145,8 @@ export const EditWarehouseDialog: React.FC<WarehouseDialogProps> = ({ onClose, w
             <Label for="capacity">Capacity:</Label>
             <Input type="number" id="capacity" name="capacity" value={formData.capacity} onChange={handleChange} required />
           </FormGroup>
-          <Button type="submit">Submit</Button>
-          <Button type="button" onClick={onClose}>Close</Button>
+          <Button color="info" className="inner-button" type="submit">Submit</Button>
+          <Button color="primary" className="inner-button" type="button" onClick={onClose}>Close</Button>
         </Form>
       </div>
     </div>
@@ -162,11 +162,11 @@ export const RemoveWarehouseDialog: React.FC<WarehouseDialogProps> = ({ onClose,
   return (
     <div className="dialog-overlay">
       <div className="dialog-content">
-        <h2>DELETE Warehouse {warehouse?.name}</h2>
+        <h2>Delete {warehouse?.name}?</h2>
         <Form onSubmit={handleSubmit}>
-          <div><p>Are you sure you want to delete?</p></div>
-          <Button type="submit">CONFIRM DELETE</Button>
-          <Button type="button" onClick={onClose}>Close</Button>
+          <div className="roboto-bold"><p>Are you sure you want to delete {warehouse?.name} and all associated items?</p></div>
+          <Button color="danger" className="inner-button" type="submit">CONFIRM DELETE</Button>
+          <Button color="primary" className="inner-button" type="button" onClick={onClose}>Close</Button>
         </Form>
       </div>
     </div>
@@ -223,8 +223,8 @@ export const AddItemDialog: React.FC<ItemDialogProps> = ({ onClose, warehouse })
             <Label for="quantity">Quantity:</Label>
             <Input type="number" id="quantity" name="quantity" value={formData.quantity} onChange={handleChange} required />
           </FormGroup>
-          <Button type="submit">Submit</Button>
-          <Button type="button" onClick={onClose}>Close</Button>
+          <Button color="info" className="inner-button" type="submit">Submit</Button>
+          <Button color="primary" className="inner-button" type="button" onClick={onClose}>Close</Button>
         </Form>
       </div>
     </div>
@@ -240,11 +240,11 @@ export const RemoveItemDialog: React.FC<ItemDialogProps> = ({ onClose, item, war
   return (
     <div className="dialog-overlay">
       <div className="dialog-content">
-        <h2>DELETE Warehouse {warehouse?.name}</h2>
+        <h2>Delete {item?.name} from {warehouse?.name}</h2>
         <Form onSubmit={handleSubmit}>
-          <div><p>Are you sure you want to delete?</p></div>
-          <Button type="submit">CONFIRM DELETE</Button>
-          <Button type="button" onClick={onClose}>Close</Button>
+          <div><p>Are you sure you want to delete {item?.name}?</p></div>
+          <Button color="danger" className="inner-button" type="submit">CONFIRM DELETE</Button>
+          <Button color="primary" className="inner-button" type="button" onClick={onClose}>Close</Button>
         </Form>
       </div>
     </div>
@@ -287,7 +287,7 @@ export const EditItemDialog: React.FC<ItemDialogProps> = ({ onClose, item, wareh
   return (
     <div className="dialog-overlay">
       <div className="dialog-content">
-        <h2>Edit Item in {warehouse?.name}</h2>
+        <h2>Edit {item?.name} in {warehouse?.name}</h2>
         <StatusDisplay response={response} />
         <Form onSubmit={handleSubmit}>
           <FormGroup>
@@ -302,8 +302,8 @@ export const EditItemDialog: React.FC<ItemDialogProps> = ({ onClose, item, wareh
             <Label for="quantity">Quantity:</Label>
             <Input type="number" id="quantity" name="quantity" value={formData.quantity} onChange={handleChange} required />
           </FormGroup>
-          <Button type="submit">Submit</Button>
-          <Button type="button" onClick={onClose}>Close</Button>
+          <Button color="info" className="inner-button" type="submit">Submit</Button>
+          <Button color="primary" className="inner-button" type="button" onClick={onClose}>Close</Button>
         </Form>
       </div>
     </div>
@@ -326,7 +326,7 @@ export const EditItemDialogNoQuantity: React.FC<ItemDialogProps> = ({ onClose, i
   return (
     <div className="dialog-overlay">
       <div className="dialog-content">
-        <h2>Edit Item {item?.name}</h2>
+        <h2>Editing {item?.name}</h2>
         <Form onSubmit={handleSubmit}>
           <FormGroup>
             <Label for="name">Name:</Label>
@@ -336,8 +336,8 @@ export const EditItemDialogNoQuantity: React.FC<ItemDialogProps> = ({ onClose, i
             <Label for="description">Description:</Label>
             <Input type="text" id="description" name="description" value={formData.description} onChange={handleChange} required />
           </FormGroup>
-          <Button type="submit">Submit</Button>
-          <Button type="button" onClick={onClose}>Close</Button>
+          <Button color="info" className="inner-button" type="submit">Submit</Button>
+          <Button color="primary" className="inner-button" type="button" onClick={onClose}>Close</Button>
         </Form>
       </div>
     </div>
@@ -353,11 +353,11 @@ export const RemoveItemDialogGlobal: React.FC<ItemDialogProps> = ({ onClose, ite
   return (
     <div className="dialog-overlay">
       <div className="dialog-content">
-        <h2>DELETE item {item?.name} from all warehouses?</h2>
+        <h2>Delete {item?.name} from all warehouses?</h2>
         <Form onSubmit={handleSubmit}>
-          <div><p>Are you sure you want to delete?</p></div>
-          <Button type="submit">CONFIRM DELETE</Button>
-          <Button type="button" onClick={onClose}>Close</Button>
+          <div className="roboto-bold"><p>Confirm you want to delete {item?.name} from ALL warehouses.</p></div>
+          <Button color="danger" className="inner-button" type="submit">CONFIRM DELETE</Button>
+          <Button color="primary" className="inner-button" type="button" onClick={onClose}>Close</Button>
         </Form>
       </div>
     </div>
