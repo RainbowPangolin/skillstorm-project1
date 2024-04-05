@@ -109,12 +109,6 @@ public class WarehouseController {
         return warehouseService.getAllItemsFromWarehouseName(warehouseName);
     }
 
-    // @PostMapping("/api/addItem")
-    // public ResponseEntity<Item> addItem(@RequestBody Item item) {
-    //     Item newItem = warehouseService.saveItem(item);
-    //     return new ResponseEntity<Item>(newItem, HttpStatus.OK);        
-    // }
-
     @PostMapping("/api/items/{warehouseName}")
     public ResponseEntity<String> addItemToWarehouse(@RequestBody Item item, @PathVariable String warehouseName) {
         try {
@@ -217,11 +211,6 @@ public class WarehouseController {
             return new ResponseEntity<>("Failed clean database: " + e.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
-
-
-    
-
-
     
     @GetMapping("/api/warehouseutilization/{warehouseName}")
     public Integer getUtilization(@PathVariable String warehouseName) {

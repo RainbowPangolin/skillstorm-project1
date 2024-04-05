@@ -37,8 +37,7 @@ public class Item {
         this.description = description;
     }
 
-    //TODO: Migrate to DTO that doesn't contain quantity. The Items table should not contain quantity, only the junction table.
-
+    //TODO: Consider migrating to DTO that doesn't contain quantity. The Items table currently has a pseudo-quantity field, but can do without it.
     public Integer getQuantity() {
         return quantity;
     }

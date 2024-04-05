@@ -1,0 +1,18 @@
+For presentation:
+
+Demonstrate CRUD operations:
+    - Debug add/delete
+    - Add new warehouse
+    - Update warehouse name, location, illegal capacity
+    - Add item to warehouse
+    - Edit item in warehouse 
+    - Edit item globally through item manager 
+    - Delete item that exists across multiple warehouses
+    - Attempt to add and update items that would violate warehouse capacity
+    - Edit item that exists in multiple warehouses from within one to show it becomes a new item
+
+Walk through a single request:
+    -
+
+Walk through database design:
+    - 3 tables- warehouse, items, and junction which stores the quantity
