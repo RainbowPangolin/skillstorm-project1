@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import WarehouseCard from './WarehouseCard';
-import { Warehouse } from '../../interfaces/Warehouse'; // Import Warehouse interface
+import { Warehouse } from '../../interfaces/Warehouse';
 import * as dc from '../DialogComponents';
 import { Button, Card, CardBody, CardTitle, ListGroup, ListGroupItem, Table } from 'reactstrap';
 

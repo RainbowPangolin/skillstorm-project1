@@ -1,5 +1,5 @@
 import React from 'react';
-import logo from '../logo.jpg'; // Import your graphic here
+import logo from '../logo.jpg';
 
 const Homepage = () => {
   return (

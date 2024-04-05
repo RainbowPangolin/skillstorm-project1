@@ -30,7 +30,6 @@ const ItemEntry: React.FC<ItemComponentProps> = ({ item, warehouse, refreshMetho
 
   return (
     <tr>
-      {/* <td>{item.itemid}</td> */}
       <td>{item.name}</td>
       <td>{item.description}</td>
       <td>{item.quantity}</td>

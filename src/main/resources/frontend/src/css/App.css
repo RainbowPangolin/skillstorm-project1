@@ -103,7 +103,7 @@ body {
   display: flex;
   justify-content: center;
   align-items: center;
-  z-index: 9999; /* Ensure it's on top of everything */
+  z-index: 9999; /* Ensuring it's on top of everything */
 }
 
 .dialog-content {
@@ -153,8 +153,6 @@ body {
 .item-list-container {
   display: flex;
   justify-content: space-between;
-
-  /* flex-wrap: wrap; Allow items to wrap to the next line if necessary */
   gap: 10px; 
 }
 

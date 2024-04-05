@@ -80,8 +80,6 @@ const DebugButtons = () => {
                 }
 
             }
-
-            // Add items to warehouses randomly (not implemented in this code)
             console.log('Debug items added successfully');
         } catch (error) {
             console.error('Error adding debug items:', error);
